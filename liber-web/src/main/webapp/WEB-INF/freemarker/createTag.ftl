@@ -1,13 +1,8 @@
-<html>
-<head>
-	<title>Liber - Create Tag</title>
-</head>
-<body>
-	<h1>Create Tag</h1>
+<#assign title="Create Tag"/>
+<#include "/includes/header.ftl"/>
 	<form method="post">
 		<label for="name">Name:</label>
 		<input type="text" name="name" value="${tag.name}"/>
 		<input type="submit" name="save" value="Save"/>
 	</form>
-</body>
-</html>
+<#include "/includes/footer.ftl"/>

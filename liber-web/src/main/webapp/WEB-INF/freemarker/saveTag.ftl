@@ -1,9 +1,4 @@
-<html>
-<head>
-	<title>Liber - Tag Saved!</title>
-</head>
-<body>
-	<h1>Liber - Tag Saved!</h1>
+<#assign title="Tag Saved!"/>
+<#include "/includes/header.ftl"/>
 	<p>${tag.name} tag successfully saved!</p>
-</body>
-</html>
+<#include "/includes/footer.ftl"/>
