@@ -5,8 +5,7 @@
 	<artifactId>liber-services</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>liber-services Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<name>liber-services</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
