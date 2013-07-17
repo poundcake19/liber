@@ -4,6 +4,7 @@
 					"scripts/createArticle.js" ] />
 <#include "/includes/header.ftl"/>
 	<form method="post">
+		<label for="name">Name:</name>
 		<input type="text" name="name" value="${article.name}" />
 		<textarea name="content" value="${article.content}"></textarea>
 		<input type="submit" name="save" value="Save"/>
