@@ -12,6 +12,7 @@ import javax.persistence.criteria.Root;
 
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
+import com.marshmallowswisdom.liber.domain.Tag;
 
 public class Repository {
 	
@@ -40,6 +41,27 @@ public class Repository {
 		transaction.commit();
 		entityManager.close();
 		return articleVersion;
+	}
+
+	public List<Tag> getTags() {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
+		Root<Tag> root = query.from( Tag.class );
+		query.select( root );
+		final List<Tag> tags = entityManager.createQuery( query ).getResultList();
+		entityManager.close();
+		return tags;
+	}
+
+	public Tag saveTag( Tag tag ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		tag = entityManager.merge( tag );
+		transaction.commit();
+		entityManager.close();
+		return tag;
 	}
 
 }
