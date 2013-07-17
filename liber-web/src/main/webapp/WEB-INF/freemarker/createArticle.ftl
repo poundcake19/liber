@@ -14,7 +14,8 @@
 <body>
 	<h1>Create Article</h1>
 	<form method="post">
-		<textarea name="content"></textarea>
+		<input type="text" name="name" value="${article.name}" />
+		<textarea name="content" value="${article.content}"></textarea>
 		<input type="submit" name="save" value="Save"/>
 	</form>
 </body>

@@ -9,6 +9,7 @@
 			<li><a href="createArticle">Create Article</a></li>
 		</li>
 	</div>
-	<p>${content}</p>
+	<h2>${article.name}</h2>
+	<p>${article.content}</p>
 </body>
 </html>

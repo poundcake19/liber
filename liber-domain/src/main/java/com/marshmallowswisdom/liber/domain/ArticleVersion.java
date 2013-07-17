@@ -14,8 +14,16 @@ public class ArticleVersion {
 		return article.getName();
 	}
 	
+	public void setArticleName( final String name ) {
+		article.setName( name );
+	}
+	
 	public String getContent() {
 		return content;
+	}
+	
+	public void setContent( final String content ) {
+		this.content = content;
 	}
 
 }

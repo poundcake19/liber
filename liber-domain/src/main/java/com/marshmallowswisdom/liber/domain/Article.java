@@ -17,6 +17,10 @@ public class Article {
 		return name;
 	}
 	
+	public void setName( final String name ) {
+		this.name = name;
+	}
+	
 	public Set<ArticleVersion> getVersions() {
 		return versions;
 	}
