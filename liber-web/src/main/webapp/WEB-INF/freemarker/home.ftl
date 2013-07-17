@@ -5,7 +5,7 @@
 	<#if (tags?size > 0) >
 		<ul>
 			<#list tags as tag>
-				<li>${tag.name}</li>
+				<li><a href="<@spring.url "/tags/${tag.id}"/>">${tag.name}</a></li>
 			</#list>
 		</ul>
 	<#else>

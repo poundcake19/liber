@@ -8,6 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 import com.marshmallowswisdom.liber.domain.Article;
@@ -52,6 +53,19 @@ public class Repository {
 		final List<Tag> tags = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return tags;
+	}
+
+	public Tag retrieveTag( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
+		final Root<Tag> root = query.from( Tag.class );
+		root.fetch( "childTags", JoinType.LEFT );
+		root.fetch( "articles", JoinType.LEFT );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final Tag tag = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
+		entityManager.close();
+		return tag;
 	}
 
 	public Tag saveTag( Tag tag ) {
