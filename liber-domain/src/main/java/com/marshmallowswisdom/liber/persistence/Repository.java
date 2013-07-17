@@ -44,12 +44,13 @@ public class Repository {
 		return articleVersion;
 	}
 
-	public List<Tag> getTags() {
+	public List<Tag> retrieveRootTags() {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
 		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
 		Root<Tag> root = query.from( Tag.class );
 		query.select( root );
+		query.where( criteriaBuilder.isNull( root.get( "parent" ) ) );
 		final List<Tag> tags = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return tags;
