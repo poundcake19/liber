@@ -14,6 +14,7 @@
 	<mvc:annotation-driven/>
 	
 	<mvc:resources mapping="/bootstrap/**" location="/bootstrap/"/>
+	<mvc:resources mapping="/img/**" location="/img/"/>
 	<mvc:resources mapping="/scripts/**" location="/scripts/"/>
 	
 	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
