@@ -1,5 +1,6 @@
 package com.marshmallowswisdom.liber.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -42,11 +43,13 @@ public class Tag {
 	
 	public Tag( final String name ) {
 		this.name = name;
+		articles = new HashSet<ArticleVersion>();
 	}
 	
 	public Tag( final String name, final Tag parent ) {
 		this.name = name;
 		this.parent = parent;
+		articles = new HashSet<ArticleVersion>();
 	}
 	
 	public int getId() {
@@ -71,6 +74,10 @@ public class Tag {
 	
 	public Set<ArticleVersion> getArticles() {
 		return articles;
+	}
+	
+	public void addArticle( final ArticleVersion article ) {
+		articles.add( article );
 	}
 
 }

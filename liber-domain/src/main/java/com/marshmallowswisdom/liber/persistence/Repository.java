@@ -68,6 +68,17 @@ public class Repository {
 		entityManager.close();
 		return tag;
 	}
+	
+	public Tag retrieveTag( final String name ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Tag> query = criteriaBuilder.createQuery( Tag.class );
+		final Root<Tag> root = query.from( Tag.class );
+		query.where( criteriaBuilder.equal( root.get( "name" ), name ) );
+		final Tag tag = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
+		entityManager.close();
+		return tag;
+	}
 
 	public Tag saveTag( Tag tag ) {
 		final EntityManager entityManager = factory.createEntityManager();
