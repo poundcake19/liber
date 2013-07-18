@@ -2,6 +2,8 @@
 <html>
 <head>
 	<title>Liber - ${title}</title>
+	<link href="<@spring.url "/bootstrap/bootstrap.min.css"/>" rel="stylesheet"/>
+	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
 	<#if scripts?? >
 		<#list scripts as script>
 			<script src="${script}"></script>
