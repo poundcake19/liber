@@ -15,7 +15,7 @@
 	<#if (articles?size > 0) >
 		<ul>
 			<#list articles as article>
-				<li>${article.name}</li>
+				<li>${article.articleName}</li>
 			</#list>
 		</ul>
 	<#else>

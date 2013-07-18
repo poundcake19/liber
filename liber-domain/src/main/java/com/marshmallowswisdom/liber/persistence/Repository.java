@@ -1,6 +1,7 @@
 package com.marshmallowswisdom.liber.persistence;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,10 +9,10 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
-import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
 import com.marshmallowswisdom.liber.domain.Tag;
 
@@ -23,13 +24,16 @@ public class Repository {
 		factory = Persistence.createEntityManagerFactory( "liber" );
 	}
 	
-	public List<Article> getArticles() {
+	public List<ArticleVersion> retrieveRootArticles() {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<Article> query = criteriaBuilder.createQuery( Article.class );
-		Root<Article> root = query.from( Article.class );
+		final CriteriaQuery<ArticleVersion> query = 
+				criteriaBuilder.createQuery( ArticleVersion.class );
+		Root<ArticleVersion> root = query.from( ArticleVersion.class );
 		query.select( root );
-		final List<Article> articles = entityManager.createQuery( query ).getResultList();
+		final Expression<Set<Tag>> tags = root.get( "tags" );
+		query.where( criteriaBuilder.isEmpty( tags ) );
+		final List<ArticleVersion> articles = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return articles;
 	}

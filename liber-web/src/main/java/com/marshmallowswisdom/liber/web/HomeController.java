@@ -14,7 +14,7 @@ public class HomeController {
 	public ModelAndView getHomePage() {
 		final Repository repository = new Repository();
 		final ModelAndView mav = new ModelAndView( "home" );
-		mav.addObject( "articles", repository.getArticles() );
+		mav.addObject( "articles", repository.retrieveRootArticles() );
 		mav.addObject( "tags", repository.retrieveRootTags() );
 		return mav;
 	}
