@@ -1,4 +1,5 @@
-<#assign title="Tag - ${tag.name}"/>
+<#assign title="${tag.name}"/>
+<#assign scripts = ["../scripts/tags.js" ] />
 <#include "/includes/header.ftl"/>
 <div class="span4">
 	<div class="well">
@@ -13,13 +14,32 @@
 		<#else>
 			<p>No tags exist.</p>
 		</#if>
-		<form action="<@spring.url "/createTag"/>" method="post" class="form-inline">
-			<input type="text" name="name" placeholder="Tag Name" class="input-medium" />
-			<input type="hidden" name="parent" value="${tag.id}"/>
-			<button class="btn btn-primary">
-				<i class="icon-tag icon-white"></i>Create Tag
-			</button>
-		</form>
+		<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">Create Tag</a>
+		<div id="myModal" 
+				class="modal hide fade" 
+				tabindex="-1" 
+				role="dialog" 
+				aria-labelledby="myModalLabel" 
+				aria-hidden="true">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+				<h3 id="myModalLabel">Create Tag</h3>
+			</div>
+			<div class="modal-body">
+				<form name="createTag" 
+						action="<@spring.url "/createTag"/>" 
+						method="post" 
+						class="form-inline">
+					<input type="text" name="name" placeholder="Tag Name" class="input-medium" />
+					<input type="hidden" name="parent" value="${tag.id}"/>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" name="createTag">
+					<i class="icon-tag icon-white"></i>Create Tag
+				</button>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="span8">

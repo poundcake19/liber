@@ -4,6 +4,7 @@
 <head>
 	<title>Liber - ${title}</title>
 	<link href="<@spring.url "/bootstrap/bootstrap.min.css"/>" rel="stylesheet"/>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
 	<#if scripts?? >
 		<#list scripts as script>
@@ -20,9 +21,17 @@
 			<div class="navbar">
 				<div class="navbar-inner">
 					<ul class="nav">
-						<li><a href="<@spring.url "/"/>">Home</a></li>
-						<li><a href="<@spring.url "/createArticle"/>">Create Article</a></li>
-						<li><a href="<@spring.url "/createTag"/>">Create Tag</a></li>
+						<li><a href="<@spring.url "/"/>"><i class="icon-home"></i>Home</a></li>
+						<li>
+							<a href="<@spring.url "/createArticle"/>">
+								<i class="icon-file"></i>Create Article
+							</a>
+						</li>
+						<li>
+							<a href="<@spring.url "/createTag"/>">
+								<i class="icon-tag"></i>Create Tag
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
