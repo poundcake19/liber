@@ -27,11 +27,6 @@
 								<i class="icon-file"></i>Create Article
 							</a>
 						</li>
-						<li>
-							<a href="<@spring.url "/createTag"/>">
-								<i class="icon-tag"></i>Create Tag
-							</a>
-						</li>
 					</ul>
 				</div>
 			</div>
