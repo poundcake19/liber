@@ -7,6 +7,7 @@ create table tag(
 	id int not null auto_increment primary key,
 	name varchar(32) not null, 
 	parent_tag_id int null, 
+	path varchar(198) not null,
 	foreign key(parent_tag_id) references tag(id)
 );
 

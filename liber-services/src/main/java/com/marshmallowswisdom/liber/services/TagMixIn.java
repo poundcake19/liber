@@ -6,5 +6,6 @@ public abstract class TagMixIn {
 	
 	@JsonView( JacksonViews.Flat.class ) public abstract int getId();
 	@JsonView( JacksonViews.Flat.class ) public abstract String getName();
+	@JsonView( JacksonViews.Flat.class ) public abstract String getPath();
 
 }

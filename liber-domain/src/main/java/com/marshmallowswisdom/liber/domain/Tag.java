@@ -20,6 +20,8 @@ import javax.persistence.Table;
 @Table(name="tag")
 public class Tag {
 	
+	private static final String PATH_DIVIDER = "/";
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
@@ -28,6 +30,8 @@ public class Tag {
 	@ManyToOne
 	@JoinColumn(name="parent_tag_id", referencedColumnName="id")
 	private Tag parent;
+	@Column
+	private String path;
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)
 	private Set<Tag> childTags;
 	@ManyToMany
@@ -43,12 +47,14 @@ public class Tag {
 	
 	public Tag( final String name ) {
 		this.name = name;
+		updatePath();
 		articles = new HashSet<ArticleVersion>();
 	}
 	
 	public Tag( final String name, final Tag parent ) {
 		this.name = name;
 		this.parent = parent;
+		updatePath();
 		articles = new HashSet<ArticleVersion>();
 	}
 	
@@ -62,10 +68,16 @@ public class Tag {
 	
 	public void setName( final String name ) {
 		this.name = name;
+		updatePath();
 	}
 	
 	public void setParent( final Tag parent ) {
 		this.parent = parent;
+		updatePath();
+	}
+	
+	public String getPath() {
+		return path;
 	}
 	
 	public Set<Tag> getChildTags() {
@@ -78,6 +90,14 @@ public class Tag {
 	
 	public void addArticle( final ArticleVersion article ) {
 		articles.add( article );
+	}
+	
+	private void updatePath() {
+		path = "";
+		if( parent != null ) {
+			path += parent.getPath();
+		}
+		path += PATH_DIVIDER + name;
 	}
 
 }
