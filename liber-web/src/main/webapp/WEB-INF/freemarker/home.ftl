@@ -54,11 +54,20 @@
 	<div class="span8">
 		<h2>Articles</h2>
 		<#if (articles?size > 0) >
-			<ul>
-				<#list articles as article>
-					<li>${article.articleName}</li>
-				</#list>
-			</ul>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<#list articles as article>
+						<tr>
+							<td>${article.articleName}</td>
+						</tr>
+					</#list>
+				</tbody>
+			</table>
 		<#else>
 			<p>No articles exist.</p>
 		</#if>
