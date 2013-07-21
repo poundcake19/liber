@@ -13,13 +13,6 @@ import com.marshmallowswisdom.liber.web.form.TagForm;
 
 @Controller
 public class TagController {
-	
-	@RequestMapping(value="/createTag", method=RequestMethod.GET)
-	public ModelAndView displayCreateTagPage() {
-		final ModelAndView mav = new ModelAndView( "createTag" );
-		mav.addObject( "tag", new TagForm() );
-		return mav;
-	}
 
 	@RequestMapping(value="/createTag", method=RequestMethod.POST)
 	public ModelAndView saveTag( @ModelAttribute TagForm tag ) {
