@@ -80,6 +80,10 @@ public class Repository {
 		root.fetch( "articles", JoinType.LEFT );
 		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
 		final Tag tag = entityManager.createQuery( query ).setMaxResults( 1 ).getSingleResult();
+		Tag parent = tag.getParent();
+		while( parent != null ) {
+			parent = parent.getParent();
+		}
 		entityManager.close();
 		return tag;
 	}

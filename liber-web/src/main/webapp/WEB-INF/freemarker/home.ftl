@@ -4,6 +4,11 @@
 	<p>Liber is an awesome web content management system!</p>
 </div>
 <div class="row-fluid">
+	<ul class="breadcrumb">
+		<li><span class="divider">/</span>Home</li>
+	</ul>
+</div>
+<div class="row-fluid">
 	<div class="span4">
 		<div class="well">
 			<#if (tags?size > 0) >

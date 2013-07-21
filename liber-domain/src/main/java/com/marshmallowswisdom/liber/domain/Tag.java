@@ -71,6 +71,10 @@ public class Tag {
 		updatePath();
 	}
 	
+	public Tag getParent() {
+		return parent;
+	}
+	
 	public void setParent( final Tag parent ) {
 		this.parent = parent;
 		updatePath();
