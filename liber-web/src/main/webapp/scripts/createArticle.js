@@ -1,20 +1,28 @@
+var tagFields = 0;
+var tags = [];
+
 $(document).ready(
 	function() {
 		tinymce.init( { selector: 'textarea' } );
-		$("[name^='tags']").typeahead( { source: retrieveTagPaths() } );
+		loadTagPaths();
+		$("button[name='addTag']").click( addTagField );
 	}
 );
 
-function retrieveTagPaths( query, callback ) {
-	var tags = [];
+function addTagField() {
+	$(".tagFields").append( '<input type="text" name="tags['+tagFields+']"><br>' );
+	$("[name^='tags']").typeahead( { source: tags } );
+	tagFields++;
+	return false;
+}
+
+function loadTagPaths() {
 	$.ajax(
 		{
 			url: "/liber-services/tags", 
-			async: false, 
 			success: function( data ) { tags = mapTagsToPaths( JSON.parse( data ) ); }
 		}
 	);
-	return tags;
 }
 
 function mapTagsToPaths( tags ) {
