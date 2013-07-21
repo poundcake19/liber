@@ -10,7 +10,7 @@ $(document).ready(
 );
 
 function addTagField() {
-	$(".tagFields").append( '<input type="text" name="tags['+tagFields+']"><br>' );
+	$(".tagFields").append( '<input type="text" name="tags['+tagFields+']" autocomplete="off"><br>' );
 	$("[name^='tags']").typeahead( { source: tags } );
 	tagFields++;
 	return false;
