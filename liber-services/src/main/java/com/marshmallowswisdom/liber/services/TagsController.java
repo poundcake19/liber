@@ -25,8 +25,7 @@ public class TagsController {
 	public String retrieveTags() {
 		final Repository repository = new Repository();
 		final List<Tag> tags = repository.retrieveTags();
-//		return tags;
-		ObjectMapper mapper = new ObjectMapper();
+		final ObjectMapper mapper = new ObjectMapper();
 		mapper.configure( MapperFeature.DEFAULT_VIEW_INCLUSION, false );
 		mapper.addMixInAnnotations( Tag.class, TagMixIn.class );
 		String response = "";
