@@ -13,12 +13,14 @@
 			<#assign currentTag = currentTag.parent />
 		</#list>
 		<#assign parentsList = [currentTag] + parentsList />
-		<#list parentsList[0..(parentsList?size - 2)] as node >
-			<li>
-				<span class="divider">/</span>
-				<a href="<@spring.url "/tags/${node.id}"/>">${node.name}</a>
-			</li>
-		</#list>
+		<#if (parentsList?size > 1) >
+			<#list parentsList[0..(parentsList?size - 2)] as node >
+				<li>
+					<span class="divider">/</span>
+					<a href="<@spring.url "/tags/${node.id}"/>">${node.name}</a>
+				</li>
+			</#list>
+		</#if>
 		<li><span class="divider">/</span>${tag.name}</li>
 	</ul>
 </div>
