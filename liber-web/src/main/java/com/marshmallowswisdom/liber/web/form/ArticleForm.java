@@ -8,12 +8,12 @@ public class ArticleForm {
 	
 	private String name;
 	private String content;
-	private List<Integer> tags;
+	private List<String> tags;
 	
 	public ArticleForm() {
 		this.name = "";
 		this.content = "";
-		tags = new AutoPopulatingList<Integer>( Integer.class );
+		tags = new AutoPopulatingList<String>( String.class );
 	}
 	
 	public ArticleForm( final String name, final String content ) {
@@ -37,11 +37,11 @@ public class ArticleForm {
 		this.content = content;
 	}
 	
-	public List<Integer> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 	
-	public void setTags( final List<Integer> tags ) {
+	public void setTags( final List<String> tags ) {
 		this.tags = tags;
 	}
 

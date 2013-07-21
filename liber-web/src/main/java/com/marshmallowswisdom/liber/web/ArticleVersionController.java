@@ -33,10 +33,11 @@ public class ArticleVersionController {
 	public ModelAndView saveArticle( @ModelAttribute ArticleForm articleVersion ) {
 		final Repository repository = new Repository();
 		final Set<Tag> tags = new HashSet<Tag>();
-		final List<Integer> tagIds = articleVersion.getTags();
-		for( Integer tagId : tagIds ) {
-			if( tagId != null ) {
-				tags.add( repository.retrieveTag( tagId ) );
+		final List<String> tagPaths = articleVersion.getTags();
+		for( String path : tagPaths ) {
+			if( path != null && !path.isEmpty() ) {
+				LOG.debug( ("Tag Path: " + path ) );
+				tags.add( repository.retrieveTagByPath( path ) );
 			}
 		}
 		
