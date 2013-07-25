@@ -24,6 +24,8 @@ function displayCreateTagFormSubmissionResult( data ) {
 	var tag = JSON.parse( data );
 	$(".modal-body").prepend( 
 			"<div class='alert alert-success'>" + 
+			"<button type='button' class='close' data-dismiss='alert'>&times;</button>" + 
 			"<p>Tag created successfully! View <a href='/liber-web/tags/" + tag.id + "'>" + 
-			tag.name + "</a></p></div>" );
+			tag.name + "</a></p>" + 
+			"</div>" );
 }
