@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,7 +22,7 @@ public class TagsController {
 	
 	private static final Logger LOG = Logger.getLogger( TagsController.class );
 	
-	@RequestMapping
+	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
 	public String retrieveTags() {
 		final Repository repository = new Repository();
@@ -32,6 +34,28 @@ public class TagsController {
 		try {
 			ObjectWriter writer = mapper.writerWithView( JacksonViews.Flat.class );
 			response = writer.writeValueAsString( tags );
+		} catch (JsonProcessingException error ) {
+			LOG.error( "Error serializing tags", error );
+		}
+		return response;
+	}
+	
+	@RequestMapping( method = RequestMethod.POST )
+	@ResponseBody
+	public String createTag( @ModelAttribute final TagForm tag ) {
+		final Repository repository = new Repository();
+		final Integer parentId = tag.getParent();
+		Tag domainTag = parentId == null ? new Tag( tag.getName() ) : 
+													new Tag( tag.getName(), 
+															repository.retrieveTag( parentId ) );
+		domainTag = repository.saveTag( domainTag );
+		final ObjectMapper mapper = new ObjectMapper();
+		mapper.configure( MapperFeature.DEFAULT_VIEW_INCLUSION, false );
+		mapper.addMixInAnnotations( Tag.class, TagMixIn.class );
+		String response = "";
+		try {
+			ObjectWriter writer = mapper.writerWithView( JacksonViews.Flat.class );
+			response = writer.writeValueAsString( domainTag );
 		} catch (JsonProcessingException error ) {
 			LOG.error( "Error serializing tags", error );
 		}
