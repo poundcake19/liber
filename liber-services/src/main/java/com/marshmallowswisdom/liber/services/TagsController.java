@@ -49,16 +49,20 @@ public class TagsController {
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseBody
-	public TagWrapper createTag( @ModelAttribute final TagForm tag ) {
+	public RestfulTag createTag( @ModelAttribute final TagForm tag ) {
 		final Repository repository = new Repository();
 		final Integer parentId = tag.getParent();
 		Tag domainTag = parentId == null ? new Tag( tag.getName() ) : 
 													new Tag( tag.getName(), 
 															repository.retrieveTag( parentId ) );
 		domainTag = repository.saveTag( domainTag );
-		final TagWrapper restfulTag = new TagWrapper( domainTag );
-		restfulTag.addLink( new Link( "self", "/liber-services/tags/" + domainTag.getId() ) );
-		restfulTag.addLink( new Link( "view", "/liber-web/tags/" + domainTag.getId() ) );
+		return convertTag( domainTag );
+	}
+	
+	private RestfulTag convertTag( final Tag tag ) {
+		final RestfulTag restfulTag = new RestfulTag( tag );
+		restfulTag.addLink( new Link( "self", "/liber-services/tags/" + tag.getId() ) );
+		restfulTag.addLink( new Link( "view", "/liber-web/tags/" + tag.getId() ) );
 		return restfulTag;
 	}
 

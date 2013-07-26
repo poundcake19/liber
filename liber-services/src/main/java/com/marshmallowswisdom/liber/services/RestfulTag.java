@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.marshmallowswisdom.liber.domain.Tag;
 
-public class TagWrapper {
+public class RestfulTag {
 	
 	private final Tag tag;
 	private final List<Link> links;
 	
-	public TagWrapper( final Tag tag ) {
+	public RestfulTag( final Tag tag ) {
 		this.tag = tag;
 		links = new ArrayList<Link>();
 	}
