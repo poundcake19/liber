@@ -20,7 +20,7 @@ function loadTagPaths() {
 	$.ajax(
 		{
 			url: "/liber-services/tags", 
-			success: function( data ) { tags = mapTagsToPaths( JSON.parse( data ) ); }
+			success: function( data ) { tags = mapTagsToPaths( data ); }
 		}
 	);
 }

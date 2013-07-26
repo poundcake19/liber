@@ -30,5 +30,9 @@ public class RestfulTag {
 	public String getName() {
 		return tag.getName();
 	}
+	
+	public String getPath() {
+		return tag.getPath();
+	}
 
 }
