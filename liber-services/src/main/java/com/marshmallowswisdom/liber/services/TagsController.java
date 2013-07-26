@@ -1,6 +1,5 @@
 package com.marshmallowswisdom.liber.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -58,19 +57,9 @@ public class TagsController {
 															repository.retrieveTag( parentId ) );
 		domainTag = repository.saveTag( domainTag );
 		final TagWrapper restfulTag = new TagWrapper( domainTag );
-		restfulTag.addLink( new Link( "self", "/liber-web/tags/" + domainTag.getId() ) );
+		restfulTag.addLink( new Link( "self", "/liber-services/tags/" + domainTag.getId() ) );
+		restfulTag.addLink( new Link( "view", "/liber-web/tags/" + domainTag.getId() ) );
 		return restfulTag;
-//		final ObjectMapper mapper = new ObjectMapper();
-//		mapper.configure( MapperFeature.DEFAULT_VIEW_INCLUSION, false );
-//		mapper.addMixInAnnotations( Tag.class, TagMixIn.class );
-//		String response = "";
-//		try {
-//			ObjectWriter writer = mapper.writerWithView( JacksonViews.Flat.class );
-//			response = writer.writeValueAsString( domainTag );
-//		} catch (JsonProcessingException error ) {
-//			LOG.error( "Error serializing tags", error );
-//		}
-//		return response;
 	}
 
 }

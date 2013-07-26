@@ -24,15 +24,15 @@ function displayCreateTagFormSubmissionResult( tag ) {
 	$(".modal-body").prepend( 
 			"<div class='alert alert-success'>" + 
 			"<button type='button' class='close' data-dismiss='alert'>&times;</button>" + 
-			"<p>Tag created successfully! View <a href='" + getSelfLink( tag ) + "'>" + 
+			"<p>Tag created successfully! View <a href='" + getLink( tag, 'view' ) + "'>" + 
 			tag.name + "</a></p>" + 
 			"</div>" );
 }
 
-function getSelfLink( tag ) {
-	for( var i = 0; i < tag.links.length; i++ ) {
-		if( tag.links[i].relationship == 'self' ) {
-			return tag.links[i].url;
+function getLink( object, relationship ) {
+	for( var i = 0; i < object.links.length; i++ ) {
+		if( object.links[i].relationship == relationship ) {
+			return object.links[i].url;
 		}
 	}
 }
