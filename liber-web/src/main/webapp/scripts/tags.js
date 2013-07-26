@@ -20,12 +20,19 @@ function submitCreateTagForm() {
 	return false;
 }
 
-function displayCreateTagFormSubmissionResult( data ) {
-	var tag = JSON.parse( data );
+function displayCreateTagFormSubmissionResult( tag ) {
 	$(".modal-body").prepend( 
 			"<div class='alert alert-success'>" + 
 			"<button type='button' class='close' data-dismiss='alert'>&times;</button>" + 
-			"<p>Tag created successfully! View <a href='/liber-web/tags/" + tag.id + "'>" + 
+			"<p>Tag created successfully! View <a href='" + getSelfLink( tag ) + "'>" + 
 			tag.name + "</a></p>" + 
 			"</div>" );
+}
+
+function getSelfLink( tag ) {
+	for( var i = 0; i < tag.links.length; i++ ) {
+		if( tag.links[i].relationship == 'self' ) {
+			return tag.links[i].url;
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package com.marshmallowswisdom.liber.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -27,6 +28,13 @@ public class TagsController {
 	public String retrieveTags() {
 		final Repository repository = new Repository();
 		final List<Tag> tags = repository.retrieveTags();
+//		final List<TagWrapper> restfulTags = new ArrayList<TagWrapper>();
+//		for( Tag tag : tags ) {
+//			final TagWrapper restfulTag = new TagWrapper( tag );
+//			restfulTag.addLink( new Link( "self", "/liber-web/tags/" + tag.getId() ) );
+//			restfulTags.add( restfulTag );
+//		}
+//		return restfulTags;
 		final ObjectMapper mapper = new ObjectMapper();
 		mapper.configure( MapperFeature.DEFAULT_VIEW_INCLUSION, false );
 		mapper.addMixInAnnotations( Tag.class, TagMixIn.class );
@@ -42,24 +50,27 @@ public class TagsController {
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseBody
-	public String createTag( @ModelAttribute final TagForm tag ) {
+	public TagWrapper createTag( @ModelAttribute final TagForm tag ) {
 		final Repository repository = new Repository();
 		final Integer parentId = tag.getParent();
 		Tag domainTag = parentId == null ? new Tag( tag.getName() ) : 
 													new Tag( tag.getName(), 
 															repository.retrieveTag( parentId ) );
 		domainTag = repository.saveTag( domainTag );
-		final ObjectMapper mapper = new ObjectMapper();
-		mapper.configure( MapperFeature.DEFAULT_VIEW_INCLUSION, false );
-		mapper.addMixInAnnotations( Tag.class, TagMixIn.class );
-		String response = "";
-		try {
-			ObjectWriter writer = mapper.writerWithView( JacksonViews.Flat.class );
-			response = writer.writeValueAsString( domainTag );
-		} catch (JsonProcessingException error ) {
-			LOG.error( "Error serializing tags", error );
-		}
-		return response;
+		final TagWrapper restfulTag = new TagWrapper( domainTag );
+		restfulTag.addLink( new Link( "self", "/liber-web/tags/" + domainTag.getId() ) );
+		return restfulTag;
+//		final ObjectMapper mapper = new ObjectMapper();
+//		mapper.configure( MapperFeature.DEFAULT_VIEW_INCLUSION, false );
+//		mapper.addMixInAnnotations( Tag.class, TagMixIn.class );
+//		String response = "";
+//		try {
+//			ObjectWriter writer = mapper.writerWithView( JacksonViews.Flat.class );
+//			response = writer.writeValueAsString( domainTag );
+//		} catch (JsonProcessingException error ) {
+//			LOG.error( "Error serializing tags", error );
+//		}
+//		return response;
 	}
 
 }
