@@ -21,12 +21,8 @@ public class TagsController {
 	
 	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
-//	public List<RestfulTag> retrieveTags( @RequestParam final String parent ) {
 	public List<RestfulTag> retrieveTags() {
 		final Repository repository = new Repository();
-//		final List<Tag> tags = 
-//				( parent == null || parent.isEmpty() ) ? 
-//						repository.retrieveRootTags() : repository.retrieveTags();
 		final List<Tag> tags = repository.retrieveTags();
 		final List<RestfulTag> restfulTags = new ArrayList<RestfulTag>();
 		for( Tag tag : tags ) {
@@ -48,26 +44,10 @@ public class TagsController {
 	public RestfulTag createTag( @ModelAttribute final TagForm tag ) {
 		final Repository repository = new Repository();
 		final Integer parentId = tag.getParent();
-//		Tag domainTag = parentId == null ? new Tag( tag.getName() ) : 
-//													new Tag( tag.getName(), 
-//															repository.retrieveTag( parentId ) );
 		Tag domainTag = new Tag( tag.getName(), repository.retrieveTag( parentId ) );
 		domainTag = repository.saveTag( domainTag );
 		return convertTag( domainTag );
 	}
-	
-//	@RequestMapping( value = "/articles", method = RequestMethod.GET )
-//	@ResponseBody
-//	public List<RestfulArticle> getRootArticles() {
-//		final Repository repository = new Repository();
-//		final List<Article> articles = repository.retrieveRootArticles();
-//		final List<RestfulArticle> restfulArticles = new ArrayList<RestfulArticle>();
-//		for( Article article : articles ) {
-//			final RestfulArticle restfulArticle = new RestfulArticle( article );
-//			restfulArticles.add( restfulArticle );
-//		}
-//		return restfulArticles;
-//	}
 	
 	@RequestMapping( value = "/{tagId}/articles", method = RequestMethod.GET )
 	@ResponseBody
