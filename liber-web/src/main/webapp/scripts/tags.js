@@ -60,7 +60,17 @@ function TagViewModel() {
 			content: self.articleForm.content(), 
 			tags: self.articleForm.tags()
 		};
-		alert( article.name );
+//		alert( article.name );
+		$.ajax(
+			{
+				url: "/liber-services/articles", 
+				type: "POST", 
+				data: article, 
+				success: function( article ) {
+					alert( "article saved!" );
+				}
+			}
+		);
 	};
 	
 	self.goToTag( { id: 1 } );
