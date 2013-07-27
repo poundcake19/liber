@@ -11,6 +11,15 @@
 <div class="row-fluid">
 	<div class="span4">
 		<div class="well">
+			<ul class="nav nav-list" data-bind="foreach: tags">
+				<li><a href="#" data-bind="text: name, click: $root.goToTag"></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="row-fluid">
+	<div class="span4">
+		<div class="well">
 			<#if (tags?size > 0) >
 				<ul class="nav nav-list">
 					<li class="nav-header"><i class="icon-tags"></i>Tags</li>

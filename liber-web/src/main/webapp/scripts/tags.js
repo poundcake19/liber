@@ -1,5 +1,18 @@
+function TagViewModel() {
+	var self = this;
+	self.tags = ko.observableArray( [] );
+	
+	self.goToTag = function( tag ) {
+		alert( tag.name );
+	};
+	
+	$.getJSON( "/liber-services/tags", function( data ) { self.tags( data ); } );	
+}
+
+
 $(document).ready(
 	function() {
+		ko.applyBindings( new TagViewModel() );
 		$( "button[name='createTag']").click( submitCreateTagForm );
 	}
 );

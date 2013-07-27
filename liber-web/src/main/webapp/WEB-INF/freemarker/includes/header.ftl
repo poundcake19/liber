@@ -4,6 +4,7 @@
 <head>
 	<title>Liber - ${title}</title>
 	<link href="<@spring.url "/bootstrap/bootstrap.min.css"/>" rel="stylesheet"/>
+	<script src="<@spring.url "/scripts/knockout-2.3.0.js"/>"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
 	<#if scripts?? >
