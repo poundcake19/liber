@@ -74,40 +74,4 @@
 		<p data-bind="visible: articles().length == 0">No articles exist.</p>
 	</div>
 </div>
-<div class="row-fluid">
-	<div class="span4">
-		<div class="well">
-			<a href="#myModal" role="button" class="btn btn-primary" data-toggle="modal">
-				Create Tag
-			</a>
-			<div id="myModal" 
-					class="modal hide fade" 
-					tabindex="-1" 
-					role="dialog" 
-					aria-labelledby="myModalLabel" 
-					aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-						x
-					</button>
-					<h3 id="myModalLabel">Create Tag</h3>
-				</div>
-				<div class="modal-body">
-					<form name="createTag" 
-							action="<@spring.url "/createTag"/>" 
-							method="post" 
-							class="form-inline">
-						<input type="text" 
-								name="name" 
-								placeholder="Tag Name" 
-								class="input-medium" />
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" name="createTag">
-						<i class="icon-tag icon-white"></i>Create Tag
-					</button>
-				</div>
-			</div>
-		</div>
 <#include "/includes/footer.ftl"/>
