@@ -6,7 +6,7 @@ function TagViewModel() {
 		alert( tag.name );
 	};
 	
-	$.getJSON( "/liber-services/tags", function( data ) { self.tags( data ); } );	
+	$.getJSON( "/liber-services/tags?parent=", function( data ) { self.tags( data ); } );	
 }
 
 

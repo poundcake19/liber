@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.marshmallowswisdom.liber.domain.Tag;
@@ -18,9 +19,11 @@ public class TagsController {
 	
 	@RequestMapping( method = RequestMethod.GET )
 	@ResponseBody
-	public List<RestfulTag> retrieveTags() {
+	public List<RestfulTag> retrieveTags( @RequestParam final String parent ) {
 		final Repository repository = new Repository();
-		final List<Tag> tags = repository.retrieveTags();
+		final List<Tag> tags = 
+				( parent == null || parent.isEmpty() ) ? 
+						repository.retrieveRootTags() : repository.retrieveTags();
 		final List<RestfulTag> restfulTags = new ArrayList<RestfulTag>();
 		for( Tag tag : tags ) {
 			restfulTags.add( convertTag( tag ) );
