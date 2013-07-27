@@ -46,8 +46,8 @@ function TagViewModel() {
 		);
 	};
 	
-	$.getJSON( "/liber-services/tags?parent=", self.tags );
-	$.getJSON( "/liber-services/tags/articles", self.articles );
+	self.goToTag( { id: 1 } );
+//	$.getJSON( "/liber-services/tags/1/articles", self.articles );
 }
 
 
@@ -64,7 +64,7 @@ function buildTagHierarchy( tag ) {
 		hierarchy.unshift( currentTag );
 		currentTag = currentTag.parent;
 	}
-	hierarchy.unshift( { id: null, name: "Home" } );
+//	hierarchy.unshift( { id: null, name: "Home" } );
 	return hierarchy;
 }
 
