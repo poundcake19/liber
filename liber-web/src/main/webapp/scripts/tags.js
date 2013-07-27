@@ -9,6 +9,7 @@ function TagViewModel() {
 	
 	self.tagForm = new TagForm( "", null );
 	self.tags = ko.observableArray( [] );
+	self.successfulTagAlerts = ko.observableArray( [] );
 	self.articles = ko.observableArray( [] );
 	
 	self.chosenTag = ko.observable();
@@ -24,10 +25,12 @@ function TagViewModel() {
 				url: "/liber-services/tags", 
 				type: "POST", 
 				data: tag, 
-				success: displayCreateTagFormSubmissionResult
+				success: function( tag ) { 
+					self.tags.push( tag );
+					self.successfulTagAlerts.push( tag );
+				}
 			}
 		);
-		self.tags.push( tag );
 	};
 	
 	$.getJSON( "/liber-services/tags?parent=", self.tags );

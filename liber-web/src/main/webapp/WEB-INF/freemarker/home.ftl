@@ -14,7 +14,7 @@
 			<ul class="nav nav-list" data-bind="visible: tags().length > 0">
 				<li class="nav-header"><i class="icon-tags"></i>Tags</li>
 				<!-- ko foreach: tags -->
-				<li><a href="#" data-bind="text: name, click: $root.goToTag"></a></li>
+					<li><a href="#" data-bind="text: name, click: $root.goToTag"></a></li>
 				<!-- /ko -->
 				<li class="divider"></li>
 			</ul>
@@ -35,6 +35,12 @@
 					<h3 id="myModalLabel">Create Tag</h3>
 				</div>
 				<div class="modal-body">
+					<!-- ko foreach: successfulTagAlerts -->
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<p>Tag created successfully! View <a href="#" data-bind="text: name"></a></p>
+						</div>
+					<!-- /ko -->
 					<form name="createTag" class="form-inline">
 						<input type="text" 
 								data-bind="value: tagForm.name"
