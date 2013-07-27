@@ -1,25 +1,26 @@
 package com.marshmallowswisdom.liber.services;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.util.AutoPopulatingList;
 
 public class ArticleForm {
 	
 	private String name;
 	private String content;
-	private List<Integer> tags;
+	private List<String> tags;
 	
 	public ArticleForm() {
 		name = "";
 		content = "";
-		tags = new ArrayList<Integer>();
+		tags = new AutoPopulatingList<String>( String.class );
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName( final String name ) {
 		this.name = name;
 	}
 
@@ -27,15 +28,15 @@ public class ArticleForm {
 		return content;
 	}
 
-	public void setContent(String content) {
+	public void setContent( final String content ) {
 		this.content = content;
 	}
 
-	public List<Integer> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Integer> tags) {
+	public void setTags( final List<String> tags ) {
 		this.tags = tags;
 	}
 

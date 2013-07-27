@@ -1,7 +1,8 @@
-function TagForm( name, parent ) {
+function TagForm( name, parent, path ) {
 	var self = this;
 	self.name = ko.observable( name );
 	self.parent = ko.observable( parent );
+	self.path = ko.observable( path );
 }
 
 function ArticleForm( name, content, tags ) {
@@ -9,6 +10,11 @@ function ArticleForm( name, content, tags ) {
 	self.name = ko.observable( name );
 	self.content = ko.observable( content );
 	self.tags = ko.observableArray( tags );
+	
+	self.addTag = function() {
+//		self.tags.push( new TagForm( null, null, "test" ) );
+		self.tags.push( { path: "test" } );
+	};
 }
 
 function TagViewModel() {
@@ -58,17 +64,37 @@ function TagViewModel() {
 		var article = { 
 			name: self.articleForm.name(), 
 			content: self.articleForm.content(), 
-			tags: self.articleForm.tags()
+			tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } )
+//			tags: ["/Test Tag", "/Test Tag 2"]
 		};
-//		alert( article.name );
+//		for( var i = 0; i < self.articleForm.tags().length; i++ ) {
+//			article.tags.push( self.articleForm.tags()[i].path );
+//		}
+//		$.ajax(
+//			{
+//				url: "/liber-services/articles", 
+//				type: "POST", 
+//				data: article, 
+//				success: function( article ) {
+//					alert( "article saved!" );
+//				}
+//			}
+//		);
+//		$.post( "/liber-services/articles", 
+//				article, 
+//				function( article ) { alert( "article saved!" ); }, 
+//				'json' );
 		$.ajax(
 			{
 				url: "/liber-services/articles", 
 				type: "POST", 
-				data: article, 
+				data: JSON.stringify( article ), 
+//				data: article, 
 				success: function( article ) {
 					alert( "article saved!" );
-				}
+				}, 
+//				dataType: "json", 
+				contentType: "application/json"
 			}
 		);
 	};

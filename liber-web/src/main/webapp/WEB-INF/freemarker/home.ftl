@@ -112,6 +112,12 @@
 								placeholder="Article Name" 
 								class="input-medium" />
 						<textarea data-bind="value: articleForm.content"></textarea>
+						<div data-bind="foreach: articleForm.tags">
+							<input type="text" data-bind="value: path" placeholder="Tag Path"/>
+						</div>
+						<button class="btn btn-primary" data-bind="click: articleForm.addTag">
+							Add Tag
+						</button>
 					</form>
 				</div>
 				<div class="modal-footer">
