@@ -1,6 +1,8 @@
 package com.marshmallowswisdom.liber.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import com.marshmallowswisdom.liber.domain.Tag;
@@ -8,10 +10,12 @@ import com.marshmallowswisdom.liber.domain.Tag;
 public class RestfulTag {
 	
 	private final Tag tag;
+	private final Collection<Tag> childTags;
 	private final List<Link> links;
 	
-	public RestfulTag( final Tag tag ) {
+	public RestfulTag( final Tag tag, final Collection<Tag> childTags ) {
 		this.tag = tag;
+		this.childTags = childTags;
 		links = new ArrayList<Link>();
 	}
 	
@@ -29,6 +33,18 @@ public class RestfulTag {
 	
 	public String getName() {
 		return tag.getName();
+	}
+	
+	public List<RestfulTag> getChildTags() {
+		final List<RestfulTag> children = new ArrayList<RestfulTag>();
+		for( Tag child : childTags ) {
+			//TODO refactor with TagsController to reduce duplication
+			final RestfulTag restfulTag = new RestfulTag( child, Collections.<Tag> emptyList() );
+			restfulTag.addLink( new Link( "self", "/liber-services/tags/" + child.getId() ) );
+			restfulTag.addLink( new Link( "view", "/liber-web/tags/" + child.getId() ) );
+			children.add( restfulTag );
+		}
+		return children;
 	}
 	
 	public String getPath() {

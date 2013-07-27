@@ -15,7 +15,8 @@ function TagViewModel() {
 	self.chosenTag = ko.observable();
 	
 	self.goToTag = function( tag ) {
-		alert( tag.name );
+		$.getJSON( "/liber-services/tags/" + tag.id, 
+					function( tag ) { self.tags( tag.childTags ); } );
 	};
 	
 	self.createTag = function() {
