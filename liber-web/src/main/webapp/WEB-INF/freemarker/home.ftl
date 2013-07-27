@@ -38,7 +38,9 @@
 					<!-- ko foreach: successfulTagAlerts -->
 						<div class="alert alert-success">
 							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<p>Tag created successfully! View <a href="#" data-bind="text: name"></a></p>
+							<p>Tag created successfully! View 
+								<a href="#" data-bind="text: name, click: $root.goToTag"></a>
+							</p>
 						</div>
 					<!-- /ko -->
 					<form name="createTag" class="form-inline">
