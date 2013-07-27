@@ -4,8 +4,15 @@
 	<p>Liber is an awesome web content management system!</p>
 </div>
 <div class="row-fluid">
-	<ul class="breadcrumb">
-		<li><span class="divider">/</span>Home</li>
+	<ul class="breadcrumb" data-bind="foreach: tagHierarchy">
+		<li data-bind="visible: $index() == ($root.tagHierarchy().length - 1)">
+			<span class="divider">/</span>
+			<span data-bind="text: name"></span>
+		</li>
+		<li data-bind="visible: $index() != ($root.tagHierarchy().length - 1)">
+			<span class="divider">/</span>
+			<a href="#" data-bind="text: name, click: $root.goToTag"></a>
+		</li>
 	</ul>
 </div>
 <div class="row-fluid">

@@ -39,7 +39,7 @@ public class TagsController {
 	public RestfulTag retrieveTags( @PathVariable final int id ) {
 		final Repository repository = new Repository();
 		final Tag tag = repository.retrieveTag( id );
-		return new RestfulTag( tag, tag.getChildTags() );
+		return new RestfulTag( tag, tag.getParent(), tag.getChildTags() );
 	}
 	
 	@RequestMapping( method = RequestMethod.POST )
@@ -81,7 +81,7 @@ public class TagsController {
 	}
 	
 	private RestfulTag convertTag( final Tag tag ) {
-		final RestfulTag restfulTag = new RestfulTag( tag, Collections.<Tag> emptyList() );
+		final RestfulTag restfulTag = new RestfulTag( tag, null, Collections.<Tag> emptyList() );
 		restfulTag.addLink( new Link( "self", "/liber-services/tags/" + tag.getId() ) );
 		restfulTag.addLink( new Link( "view", "/liber-web/tags/" + tag.getId() ) );
 		return restfulTag;
