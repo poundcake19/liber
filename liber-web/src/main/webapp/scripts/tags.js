@@ -16,7 +16,10 @@ function TagViewModel() {
 	
 	self.goToTag = function( tag ) {
 		$.getJSON( "/liber-services/tags/" + tag.id, 
-					function( tag ) { self.tags( tag.childTags ); } );
+					function( tag ) { 
+						self.tags( tag.childTags );
+						$.getJSON( "/liber-services/tags/" + tag.id + "/articles", self.articles );
+					} );
 	};
 	
 	self.createTag = function() {
