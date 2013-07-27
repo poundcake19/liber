@@ -4,12 +4,20 @@ function TagForm( name, parent ) {
 	self.parent = ko.observable( parent );
 }
 
+function ArticleForm( name, content, tags ) {
+	var self = this;
+	self.name = ko.observable( name );
+	self.content = ko.observable( content );
+	self.tags = ko.observableArray( tags );
+}
+
 function TagViewModel() {
 	var self = this;
 	
 	self.tagForm = new TagForm( "", null );
 	self.tags = ko.observableArray( [] );
 	self.successfulTagAlerts = ko.observableArray( [] );
+	self.articleForm = new ArticleForm( "", "", [] );
 	self.articles = ko.observableArray( [] );
 	
 	self.chosenTag = ko.observable();
@@ -27,6 +35,10 @@ function TagViewModel() {
 					} );
 	};
 	
+	self.goToArticle = function( article ) {
+		alert( article.name );
+	};
+	
 	self.createTag = function() {
 		var tag = { name: self.tagForm.name(), parent: self.tagForm.parent() };
 		$.ajax(
@@ -42,6 +54,15 @@ function TagViewModel() {
 		);
 	};
 	
+	self.createArticle = function() {
+		var article = { 
+			name: self.articleForm.name(), 
+			content: self.articleForm.content(), 
+			tags: self.articleForm.tags()
+		};
+		alert( article.name );
+	};
+	
 	self.goToTag( { id: 1 } );
 }
 
@@ -49,6 +70,7 @@ function TagViewModel() {
 $(document).ready(
 	function() {
 		ko.applyBindings( new TagViewModel() );
+		tinymce.init( { selector: 'textarea' } );
 	}
 );
 

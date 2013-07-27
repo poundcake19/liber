@@ -81,6 +81,46 @@
 			</tbody>
 		</table>
 		<p data-bind="visible: articles().length == 0">No articles exist.</p>
+		<p>
+			<a href="#createArticleModal" role="button" class="btn btn-primary" data-toggle="modal">
+				Create Article
+			</a>
+			<div id="createArticleModal" 
+					class="modal hide fade" 
+					tabindex="-1" 
+					role="dialog" 
+					aria-labelledby="createArticleModalLabel" 
+					aria-hidden="true">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+						x
+					</button>
+					<h3 id="createArticleModalLabel">Create Article</h3>
+				</div>
+				<div class="modal-body">
+					<!-- ko foreach: successfulTagAlerts -->
+						<div class="alert alert-success">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							<p>Article created successfully! View 
+								<a href="#" data-bind="text: name, click: $root.goToArticle"></a>
+							</p>
+						</div>
+					<!-- /ko -->
+					<form class="form-inline">
+						<input type="text" 
+								data-bind="value: articleForm.name"
+								placeholder="Article Name" 
+								class="input-medium" />
+						<textarea data-bind="value: articleForm.content"></textarea>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" data-bind="click: createArticle">
+						<i class="icon-tag icon-white"></i>Create Article
+					</button>
+				</div>
+			</div>
+		</p>
 	</div>
 </div>
 <#include "/includes/footer.ftl"/>
