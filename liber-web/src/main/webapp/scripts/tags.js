@@ -1,12 +1,37 @@
+function TagForm( name, parent ) {
+	var self = this;
+	self.name = ko.observable( name );
+	self.parent = ko.observable( parent );
+}
+
 function TagViewModel() {
 	var self = this;
+	
+	self.tagForm = new TagForm( "", null );
 	self.tags = ko.observableArray( [] );
+	self.articles = ko.observableArray( [] );
+	
+	self.chosenTag = ko.observable();
 	
 	self.goToTag = function( tag ) {
 		alert( tag.name );
 	};
 	
-	$.getJSON( "/liber-services/tags?parent=", function( data ) { self.tags( data ); } );	
+	self.createTag = function() {
+		var tag = { name: self.tagForm.name(), parent: self.tagForm.parent() };
+		$.ajax(
+			{
+				url: "/liber-services/tags", 
+				type: "POST", 
+				data: tag, 
+				success: displayCreateTagFormSubmissionResult
+			}
+		);
+		self.tags.push( tag );
+	};
+	
+	$.getJSON( "/liber-services/tags?parent=", self.tags );
+	$.getJSON( "/liber-services/tags/articles", self.articles );
 }
 
 

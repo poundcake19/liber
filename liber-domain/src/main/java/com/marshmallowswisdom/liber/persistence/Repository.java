@@ -10,9 +10,11 @@ import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Expression;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
+import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
 import com.marshmallowswisdom.liber.domain.Tag;
 
@@ -24,16 +26,17 @@ public class Repository {
 		factory = Persistence.createEntityManagerFactory( "liber" );
 	}
 	
-	public List<ArticleVersion> retrieveRootArticles() {
+	public List<Article> retrieveRootArticles() {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-		final CriteriaQuery<ArticleVersion> query = 
-				criteriaBuilder.createQuery( ArticleVersion.class );
-		Root<ArticleVersion> root = query.from( ArticleVersion.class );
+		final CriteriaQuery<Article> query = 
+				criteriaBuilder.createQuery( Article.class );
+		Root<Article> root = query.from( Article.class );
 		query.select( root );
-		final Expression<Set<Tag>> tags = root.get( "tags" );
+		Join<Article,ArticleVersion> versions = root.join( "versions", JoinType.LEFT );
+		final Expression<Set<Tag>> tags = versions.get( "tags" );
 		query.where( criteriaBuilder.isEmpty( tags ) );
-		final List<ArticleVersion> articles = entityManager.createQuery( query ).getResultList();
+		final List<Article> articles = entityManager.createQuery( query ).getResultList();
 		entityManager.close();
 		return articles;
 	}
@@ -119,6 +122,19 @@ public class Repository {
 		transaction.commit();
 		entityManager.close();
 		return tag;
+	}
+
+	public List<Article> retrieveArticlesByTag( final int tagId ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Article> query = criteriaBuilder.createQuery( Article.class );
+		final Root<Article> root = query.from( Article.class );
+		Join<Article,ArticleVersion> version = root.join( "versions", JoinType.LEFT );
+		Join<ArticleVersion,Tag> tag = version.join( "tags", JoinType.LEFT );
+		query.where( criteriaBuilder.equal( tag.get( "id" ), tagId ) );
+		final List<Article> articles = entityManager.createQuery( query ).getResultList();
+		entityManager.close();
+		return articles;
 	}
 
 }

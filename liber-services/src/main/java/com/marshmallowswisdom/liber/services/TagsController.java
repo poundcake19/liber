@@ -5,11 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.Tag;
 import com.marshmallowswisdom.liber.persistence.Repository;
 
@@ -41,6 +43,32 @@ public class TagsController {
 															repository.retrieveTag( parentId ) );
 		domainTag = repository.saveTag( domainTag );
 		return convertTag( domainTag );
+	}
+	
+	@RequestMapping( value = "/articles", method = RequestMethod.GET )
+	@ResponseBody
+	public List<RestfulArticle> getRootArticles() {
+		final Repository repository = new Repository();
+		final List<Article> articles = repository.retrieveRootArticles();
+		final List<RestfulArticle> restfulArticles = new ArrayList<RestfulArticle>();
+		for( Article article : articles ) {
+			final RestfulArticle restfulArticle = new RestfulArticle( article );
+			restfulArticles.add( restfulArticle );
+		}
+		return restfulArticles;
+	}
+	
+	@RequestMapping( value = "/{tagId}/articles", method = RequestMethod.GET )
+	@ResponseBody
+	public List<RestfulArticle> getArticles( @PathVariable final int tagId ) {
+		final Repository repository = new Repository();
+		final List<Article> articles = repository.retrieveArticlesByTag( tagId );
+		final List<RestfulArticle> restfulArticles = new ArrayList<RestfulArticle>();
+		for( Article article : articles ) {
+			final RestfulArticle restfulArticle = new RestfulArticle( article );
+			restfulArticles.add( restfulArticle );
+		}
+		return restfulArticles;
 	}
 	
 	private RestfulTag convertTag( final Tag tag ) {
