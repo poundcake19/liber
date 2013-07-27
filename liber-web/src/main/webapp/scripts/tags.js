@@ -18,6 +18,7 @@ function TagViewModel() {
 		$.getJSON( "/liber-services/tags/" + tag.id, 
 					function( tag ) { 
 						self.tags( tag.childTags );
+						self.tagForm.parent( tag.id );
 						$.getJSON( "/liber-services/tags/" + tag.id + "/articles", self.articles );
 					} );
 	};
