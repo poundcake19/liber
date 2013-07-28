@@ -136,6 +136,7 @@ function TagViewModel() {
 				data: JSON.stringify( article ), 
 				success: function( article ) {
 					alert( "article saved!" );
+					self.goToViewArticles();
 				}, 
 				contentType: "application/json"
 			}
