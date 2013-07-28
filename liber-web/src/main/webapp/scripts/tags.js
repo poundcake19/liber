@@ -68,70 +68,49 @@ function ArticleForm( name, content, tags ) {
 	self.tags = ko.observableArray( tags );
 }
 
-function TagViewModel() {
+function ArticleViewModel( masterViewModel ) {
 	var self = this;
+	self.masterViewModel = masterViewModel;
 	
-	self.tagForm = new TagForm( "", null );
-	self.tags = ko.observableArray( [] );
-	self.tagPaths = function() { return $.map( self.tags(), function( tag ) { return tag.path; } ); };
-	self.successfulTagAlerts = ko.observableArray( [] );
-	self.articleForm = new ArticleForm( "", "", [] );
 	self.articles = ko.observableArray( [] );
+	self.articleForm = new ArticleForm( "", "", [] );
 	
-	self.chosenTag = ko.observable();
-	self.tagHierarchy = ko.observableArray( buildTagHierarchy() );
-	self.articleView = ko.observable( "home" );
-	
-	self.goToTag = function( tag ) {
-		if( self.articleView() != "create" || 
-				confirm( "Navigating away will lose any work on the current article. " +
-						"Do you want to continue?" ) ) {
-			var url = "/liber-services/tags/" + tag.id;
-			var articlesUrl = "/liber-services/tags/" + tag.id + "/articles";
-			$.getJSON( url, 
-						function( tag ) { 
-							self.tags( tag.childTags );
-							self.tagHierarchy( buildTagHierarchy( tag ) );
-							self.tagForm.parent( tag.id );
-							$.getJSON( articlesUrl, self.articles );
-						} );
-			if( tag.id == 1 ) {
-				self.goToHomeArticles();
-			}
-			else {
-				self.goToTagListing();
-			}
+	self.homeView = "home";
+	self.tagListingView = "tagListing";
+	self.viewArticleView = "view";
+	self.createView = "create";
+	self.activeArticle = ko.observable();
+	self.articleView = ko.observable( self.homeView );
+	self.isHomeView = ko.computed( function() {
+			return self.articleView() == self.homeView;
 		}
-	};
+	);
+	self.isTagListingView = ko.computed( function() {
+			return self.articleView() == self.tagListingView;
+		}
+	);
+	self.isViewArticleView = ko.computed( function() {
+			return self.articleView() == self.viewArticleView;
+		}
+	);
+	self.isCreateView = ko.computed( function() {
+			return self.articleView() == self.createView;
+		}
+	);
 	self.goToHomeArticles = function() {
-		self.articleView( "home" );
+		self.articleView( self.homeView );
 	};
 	self.goToTagListing = function () {
-		self.articleView( "tagListing" );
+		self.articleView( self.tagListingView );
 		self.articleForm.name( "" );
 		self.articleForm.content( "" );
 		self.articleForm.tags( [] );
 	};
 	self.goToViewArticle = function( article ) {
-		self.articleView( "view" );
+		self.articleView( self.viewArticleView );
 	};
 	self.goToCreateArticle = function() {
-		self.articleView( "create" );
-	};
-	
-	self.createTag = function() {
-		var tag = { name: self.tagForm.name(), parent: self.tagForm.parent() };
-		$.ajax(
-			{
-				url: "/liber-services/tags", 
-				type: "POST", 
-				data: tag, 
-				success: function( tag ) { 
-					self.tags.push( tag );
-					self.successfulTagAlerts.push( tag );
-				}
-			}
-		);
+		self.articleView( self.createView );
 	};
 	
 	self.createArticle = function() {
@@ -147,7 +126,7 @@ function TagViewModel() {
 				data: JSON.stringify( article ), 
 				success: function( article ) {
 					alert( "article saved!" );
-					self.goToViewArticles();
+					self.goToTagListing();
 				}, 
 				contentType: "application/json"
 			}
@@ -156,6 +135,57 @@ function TagViewModel() {
 	
 	self.addTag = function() {
 		self.articleForm.tags.push( { path: "" } );
+	};
+}
+
+function TagViewModel() {
+	var self = this;
+	
+	self.articleViewModel = new ArticleViewModel( self );
+	
+	self.tagForm = new TagForm( "", null );
+	self.tags = ko.observableArray( [] );
+	self.tagPaths = function() { return $.map( self.tags(), function( tag ) { return tag.path; } ); };
+	self.successfulTagAlerts = ko.observableArray( [] );
+	
+	self.chosenTag = ko.observable();
+	self.tagHierarchy = ko.observableArray( buildTagHierarchy() );
+	
+	self.goToTag = function( tag ) {
+		if( !self.articleViewModel.isCreateView() || 
+				confirm( "Navigating away will lose any work on the current article. " +
+						"Do you want to continue?" ) ) {
+			var url = "/liber-services/tags/" + tag.id;
+			var articlesUrl = "/liber-services/tags/" + tag.id + "/articles";
+			$.getJSON( url, 
+						function( tag ) { 
+							self.tags( tag.childTags );
+							self.tagHierarchy( buildTagHierarchy( tag ) );
+							self.tagForm.parent( tag.id );
+							$.getJSON( articlesUrl, self.articleViewModel.articles );
+						} );
+			if( tag.id == 1 ) {
+				self.articleViewModel.goToHomeArticles();
+			}
+			else {
+				self.articleViewModel.goToTagListing();
+			}
+		}
+	};
+	
+	self.createTag = function() {
+		var tag = { name: self.tagForm.name(), parent: self.tagForm.parent() };
+		$.ajax(
+			{
+				url: "/liber-services/tags", 
+				type: "POST", 
+				data: tag, 
+				success: function( tag ) { 
+					self.tags.push( tag );
+					self.successfulTagAlerts.push( tag );
+				}
+			}
+		);
 	};
 	
 	self.goToTag( { id: 1 } );
