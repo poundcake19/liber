@@ -160,10 +160,6 @@ $(document).ready(
 	}
 );
 
-function getTagPaths( tags ) {
-	return $.map( tags, function( tag ) { return tag.path; } );
-}
-
 function buildTagHierarchy( tag ) {
 	var hierarchy = [];
 	var currentTag = tag;
