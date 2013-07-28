@@ -66,7 +66,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="span8">
+	<div class="span8" data-bind="visible: articleView() == 'view'">
 		<h2>Articles</h2>
 		<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
 			<thead>
@@ -82,51 +82,41 @@
 		</table>
 		<p data-bind="visible: articles().length == 0">No articles exist.</p>
 		<p>
-			<a href="#createArticleModal" role="button" class="btn btn-primary" data-toggle="modal">
+			<button class="btn btn-primary" data-bind="click: goToCreateArticle">
 				Create Article
-			</a>
-			<div id="createArticleModal" 
-					class="modal hide fade" 
-					tabindex="-1" 
-					role="dialog" 
-					aria-labelledby="createArticleModalLabel" 
-					aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-						x
-					</button>
-					<h3 id="createArticleModalLabel">Create Article</h3>
-				</div>
-				<div class="modal-body">
-					<!-- ko foreach: successfulTagAlerts -->
-						<div class="alert alert-success">
-							<button type="button" class="close" data-dismiss="alert">&times;</button>
-							<p>Article created successfully! View 
-								<a href="#" data-bind="text: name, click: $root.goToArticle"></a>
-							</p>
-						</div>
-					<!-- /ko -->
-					<form class="form-inline">
-						<input type="text" 
-								data-bind="value: articleForm.name"
-								placeholder="Article Name" 
-								class="input-medium" />
-						<textarea data-bind="value: articleForm.content"></textarea>
-						<div id="articleTags" data-bind="foreach: articleForm.tags">
-							<input type="text" data-bind="value: path" placeholder="Tag Path"/>
-						</div>
-						<button class="btn btn-primary" data-bind="click: addTag">
-							Add Tag
-						</button>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="btn btn-primary" data-bind="click: createArticle">
-						<i class="icon-tag icon-white"></i>Create Article
-					</button>
-				</div>
-			</div>
+			</button>
 		</p>
+	</div>
+	<div class="span8" data-bind="visible: articleView() == 'create'">
+		<form class="form-inline">
+			<p>
+				<input type="text" 
+						data-bind="value: articleForm.name"
+						placeholder="Article Name" 
+						class="input-medium" />
+			</p>
+			<p>
+				<textarea data-bind="value: articleForm.content"></textarea>
+			</p>
+			<p>
+				<div id="articleTags" data-bind="foreach: articleForm.tags">
+					<input type="text" data-bind="value: path" placeholder="Tag Path"/><br>
+				</div>
+			</p>
+			<p>
+				<button class="btn btn-primary" data-bind="click: addTag">
+					Add Tag
+				</button>
+			</p>
+			<p>
+				<button class="btn btn-primary" data-bind="click: createArticle">
+					<i class="icon-tag icon-white"></i>Create Article
+				</button>
+				<button class="btn btn-danger" data-bind="click: goToViewArticles">
+					Cancel
+				</button>
+			</p>
+		</form>
 	</div>
 </div>
 <#include "/includes/footer.ftl"/>

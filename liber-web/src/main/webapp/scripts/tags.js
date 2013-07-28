@@ -23,6 +23,7 @@ function TagViewModel() {
 	
 	self.chosenTag = ko.observable();
 	self.tagHierarchy = ko.observableArray( buildTagHierarchy() );
+	self.articleView = ko.observable( "view" );
 	
 	self.goToTag = function( tag ) {
 		var url = "/liber-services/tags/" + tag.id;
@@ -38,6 +39,13 @@ function TagViewModel() {
 	
 	self.goToArticle = function( article ) {
 		alert( article.name );
+	};
+	
+	self.goToCreateArticle = function() {
+		self.articleView( "create" );
+	};
+	self.goToViewArticles = function () {
+		self.articleView( "view" );
 	};
 	
 	self.createTag = function() {
