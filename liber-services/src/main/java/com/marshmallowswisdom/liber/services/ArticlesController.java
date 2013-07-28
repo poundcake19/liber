@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,14 @@ import com.marshmallowswisdom.liber.persistence.Repository;
 @Controller
 @RequestMapping("/articles")
 public class ArticlesController {
+	
+	@RequestMapping( value = "/{id}", method = RequestMethod.GET )
+	@ResponseBody
+	public RestfulArticle retrieveArticle( @PathVariable final int id ) {
+		final Repository repository = new Repository();
+		final Article article = repository.retrieveArticle( id );
+		return new RestfulArticle( article );
+	}
 	
 	@RequestMapping( method = RequestMethod.POST )
 	@ResponseBody

@@ -91,6 +91,7 @@
 			</p>
 		</div>
 		<div class="span8" data-bind="visible: isViewArticleView">
+			<h2 data-bind="text: activeArticle().name"></h2>
 			<p>Show article here...</p>
 		</div>
 		<div class="span8" data-bind="visible: isCreateView">

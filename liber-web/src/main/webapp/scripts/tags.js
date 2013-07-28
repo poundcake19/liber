@@ -79,7 +79,7 @@ function ArticleViewModel( masterViewModel ) {
 	self.tagListingView = "tagListing";
 	self.viewArticleView = "view";
 	self.createView = "create";
-	self.activeArticle = ko.observable();
+	self.activeArticle = ko.observable( { name: "" } );
 	self.articleView = ko.observable( self.homeView );
 	self.isHomeView = ko.computed( function() {
 			return self.articleView() == self.homeView;
@@ -107,6 +107,10 @@ function ArticleViewModel( masterViewModel ) {
 		self.articleForm.tags( [] );
 	};
 	self.goToViewArticle = function( article ) {
+		$.getJSON( "/liber-services/articles/" + article.id, 
+					function( article ) {
+						self.activeArticle( article );
+					} );
 		self.articleView( self.viewArticleView );
 	};
 	self.goToCreateArticle = function() {

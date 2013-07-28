@@ -31,6 +31,10 @@ public class Article {
 		this.name = name;
 		versions = new TreeSet<ArticleVersion>();
 	}
+
+	public int getId() {
+		return id;
+	}
 	
 	public String getName() {
 		return name;

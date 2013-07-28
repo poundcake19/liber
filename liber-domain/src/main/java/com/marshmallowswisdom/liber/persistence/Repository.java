@@ -95,6 +95,17 @@ public class Repository {
 		return tag;
 	}
 
+	public Article retrieveArticle( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Article> query = criteriaBuilder.createQuery( Article.class );
+		final Root<Article> root = query.from( Article.class );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final Article article = entityManager.createQuery( query ).getSingleResult();
+		entityManager.close();
+		return article;
+	}
+
 	public List<Article> retrieveArticlesByTag( final int tagId ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
