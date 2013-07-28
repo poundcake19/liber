@@ -68,7 +68,7 @@
 	<div class="span8" data-bind="visible: articleView() == 'home'">
 		<p>Navigate to a tag on the left to view the associated articles.</p>
 	</div>
-	<div class="span8" data-bind="visible: articleView() == 'view'">
+	<div class="span8" data-bind="visible: articleView() == 'tagListing'">
 		<h2>Articles</h2>
 		<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
 			<thead>
@@ -78,7 +78,7 @@
 			</thead>
 			<tbody data-bind="foreach: articles">
 				<tr>
-					<td data-bind="text: name"></td>
+					<td data-bind="text: name, click: $root.goToViewArticle"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -88,6 +88,9 @@
 				Create Article
 			</button>
 		</p>
+	</div>
+	<div class="span8" data-bind="visible: articleView() == 'view'">
+		<p>Show article here...</p>
 	</div>
 	<div class="span8" data-bind="visible: articleView() == 'create'">
 		<form class="form-inline">
@@ -118,7 +121,7 @@
 				<button class="btn btn-primary" data-bind="click: createArticle">
 					<i class="icon-file icon-white"></i>Create Article
 				</button>
-				<button class="btn btn-danger" data-bind="click: goToViewArticles">
+				<button class="btn btn-danger" data-bind="click: goToTagListing">
 					Cancel
 				</button>
 			</p>

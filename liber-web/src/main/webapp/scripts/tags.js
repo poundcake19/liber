@@ -99,26 +99,24 @@ function TagViewModel() {
 				self.goToHomeArticles();
 			}
 			else {
-				self.goToViewArticles();
+				self.goToTagListing();
 			}
 		}
 	};
-	
-	self.goToArticle = function( article ) {
-		alert( article.name );
-	};
-	
 	self.goToHomeArticles = function() {
 		self.articleView( "home" );
 	};
-	self.goToCreateArticle = function() {
-		self.articleView( "create" );
-	};
-	self.goToViewArticles = function () {
-		self.articleView( "view" );
+	self.goToTagListing = function () {
+		self.articleView( "tagListing" );
 		self.articleForm.name( "" );
 		self.articleForm.content( "" );
 		self.articleForm.tags( [] );
+	};
+	self.goToViewArticle = function( article ) {
+		self.articleView( "view" );
+	};
+	self.goToCreateArticle = function() {
+		self.articleView( "create" );
 	};
 	
 	self.createTag = function() {
