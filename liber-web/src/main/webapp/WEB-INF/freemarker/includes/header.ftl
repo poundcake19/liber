@@ -7,7 +7,8 @@
 	<script src="<@spring.url "/scripts/knockout-2.3.0.js"/>"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
-	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+	<script src="tinymce/tinymce.min.js"></script>
+	<script src="tinymce/jquery.tinymce.min.js"></script>
 	<#if scripts?? >
 		<#list scripts as script>
 			<script src="${script}"></script>

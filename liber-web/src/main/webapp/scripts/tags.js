@@ -1,3 +1,62 @@
+(function($) {
+	var init_queue = $.Deferred(); // jQuery deferred object used for creating TinyMCE instances synchronously
+	init_queue.resolve();
+	ko.bindingHandlers.tinymce = {
+	    init: function (element, valueAccessor, allBindingsAccessor, context) {
+	        var options    = allBindingsAccessor().tinymceOptions || {
+						menubar : false,
+						statusbar : false,
+						paste_as_text: true,
+						toolbar: "bold italic hr | link unlink | bullist numlist | fullscreen",
+						plugins: "link,paste,fullscreen"
+					};
+	        var modelValue = valueAccessor();
+	        var value      = ko.utils.unwrapObservable(valueAccessor());
+	        var el         = $(element);
+	
+	        //handle edits made in the editor. Updates after an undo point is reached.
+	        options.setup = function (ed) {
+						ed.on('change', function(e) {
+							if (ko.isWriteableObservable(modelValue)) {
+	              modelValue(ed.getContent());
+	          	}
+						});
+						ed.on('keyup', function(e) {
+							if (ko.isWriteableObservable(modelValue)) {
+	              modelValue(ed.getContent({format: 'raw'}));
+	          	}
+				    });
+	        };
+	
+	        //handle destroying an editor 
+	        ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+	            setTimeout(function(){$(element).tinymce().remove();}, 0);
+	        });
+	
+	        //$(element).tinymce(options);
+	        setTimeout(function() { $(element).tinymce(options); }, 0);
+	        el.html(value);
+	
+	    },
+	    update: function (element, valueAccessor, allBindingsAccessor, context) {
+	        var el = $(element);
+	        var value = ko.utils.unwrapObservable(valueAccessor());
+	        var id = el.attr('id');
+	        
+	        //handle programmatic updates to the observable
+	        // also makes sure it doesn't update it if it's the same. 
+	        // otherwise, it will reload the instance, causing the cursor to jump.
+	        if (id !== undefined ){
+	            var content = tinyMCE.get(id).getContent({format: 'raw'});
+	            if (content !== value) {
+	                el.html(value);
+	            }
+	        }
+	    }
+	};
+}(jQuery));
+
+
 function TagForm( name, parent, path ) {
 	var self = this;
 	self.name = ko.observable( name );
@@ -46,6 +105,9 @@ function TagViewModel() {
 	};
 	self.goToViewArticles = function () {
 		self.articleView( "view" );
+		self.articleForm.name( "" );
+		self.articleForm.content( "" );
+		self.articleForm.tags( [] );
 	};
 	
 	self.createTag = function() {
@@ -83,19 +145,20 @@ function TagViewModel() {
 	};
 	
 	self.addTag = function() {
-		self.articleForm.tags.push( { path: "test" } );
-		$("#articleTags input").typeahead( { source: $.map( self.tags(), function( tag ) { return tag.path; } ) } );
+		self.articleForm.tags.push( { path: "" } );
+		$("#articleTags input").typeahead( { source: $.map( self.tags(), 
+															function( tag ) { return tag.path; } ) } );
 	};
 	
 	self.goToTag( { id: 1 } );
 }
 
-$(document).ready(
-	function() {
+//$(document).ready(
+//	function() {
 		ko.applyBindings( new TagViewModel() );
-		tinymce.init( { selector: 'textarea' } );
-	}
-);
+//		tinymce.init( { selector: 'textarea' } );
+//	}
+//);
 
 function buildTagHierarchy( tag ) {
 	var hierarchy = [];

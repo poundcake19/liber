@@ -1,5 +1,4 @@
 <#assign title="Home"/>
-<#assign scripts = ["scripts/tags.js" ] />
 <#include "/includes/header.ftl"/>
 	<p>Liber is an awesome web content management system!</p>
 </div>
@@ -96,21 +95,23 @@
 						class="input-medium" />
 			</p>
 			<p>
-				<textarea data-bind="value: articleForm.content"></textarea>
+				<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
 			</p>
 			<p>
 				<div id="articleTags" data-bind="foreach: articleForm.tags">
-					<input type="text" data-bind="value: path" placeholder="Tag Path"/><br>
+					<p>
+						<input type="text" data-bind="value: path" placeholder="Tag Path"/>
+					</p>
 				</div>
 			</p>
 			<p>
-				<button class="btn btn-primary" data-bind="click: addTag">
-					Add Tag
+				<button class="btn btn-info" data-bind="click: addTag">
+					<i class="icon-tag icon-white"></i>Add Tag
 				</button>
 			</p>
 			<p>
 				<button class="btn btn-primary" data-bind="click: createArticle">
-					<i class="icon-tag icon-white"></i>Create Article
+					<i class="icon-file icon-white"></i>Create Article
 				</button>
 				<button class="btn btn-danger" data-bind="click: goToViewArticles">
 					Cancel
