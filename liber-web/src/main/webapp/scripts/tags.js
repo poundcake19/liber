@@ -80,24 +80,37 @@ function TagViewModel() {
 	
 	self.chosenTag = ko.observable();
 	self.tagHierarchy = ko.observableArray( buildTagHierarchy() );
-	self.articleView = ko.observable( "view" );
+	self.articleView = ko.observable( "home" );
 	
 	self.goToTag = function( tag ) {
-		var url = "/liber-services/tags/" + tag.id;
-		var articlesUrl = "/liber-services/tags/" + tag.id + "/articles";
-		$.getJSON( url, 
-					function( tag ) { 
-						self.tags( tag.childTags );
-						self.tagHierarchy( buildTagHierarchy( tag ) );
-						self.tagForm.parent( tag.id );
-						$.getJSON( articlesUrl, self.articles );
-					} );
+		if( self.articleView() != "create" || 
+				confirm( "Navigating away will lose any work on the current article. " +
+						"Do you want to continue?" ) ) {
+			var url = "/liber-services/tags/" + tag.id;
+			var articlesUrl = "/liber-services/tags/" + tag.id + "/articles";
+			$.getJSON( url, 
+						function( tag ) { 
+							self.tags( tag.childTags );
+							self.tagHierarchy( buildTagHierarchy( tag ) );
+							self.tagForm.parent( tag.id );
+							$.getJSON( articlesUrl, self.articles );
+						} );
+			if( tag.id == 1 ) {
+				self.goToHomeArticles();
+			}
+			else {
+				self.goToViewArticles();
+			}
+		}
 	};
 	
 	self.goToArticle = function( article ) {
 		alert( article.name );
 	};
 	
+	self.goToHomeArticles = function() {
+		self.articleView( "home" );
+	};
 	self.goToCreateArticle = function() {
 		self.articleView( "create" );
 	};

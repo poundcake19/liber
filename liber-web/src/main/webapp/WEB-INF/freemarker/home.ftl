@@ -65,6 +65,9 @@
 			</div>
 		</div>
 	</div>
+	<div class="span8" data-bind="visible: articleView() == 'home'">
+		<p>Navigate to a tag on the left to view the associated articles.</p>
+	</div>
 	<div class="span8" data-bind="visible: articleView() == 'view'">
 		<h2>Articles</h2>
 		<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
