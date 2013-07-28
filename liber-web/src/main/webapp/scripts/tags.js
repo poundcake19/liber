@@ -76,6 +76,7 @@ function TagViewModel() {
 	
 	self.tagForm = new TagForm( "", null );
 	self.tags = ko.observableArray( [] );
+	self.tagPaths = function() { return $.map( self.tags(), function( tag ) { return tag.path; } ); };
 	self.successfulTagAlerts = ko.observableArray( [] );
 	self.articleForm = new ArticleForm( "", "", [] );
 	self.articles = ko.observableArray( [] );
@@ -146,8 +147,8 @@ function TagViewModel() {
 	
 	self.addTag = function() {
 		self.articleForm.tags.push( { path: "" } );
-		$("#articleTags input").typeahead( { source: $.map( self.tags(), 
-															function( tag ) { return tag.path; } ) } );
+//		$("#articleTags input").typeahead( { source: $.map( self.tags(), 
+//															function( tag ) { return tag.path; } ) } );
 	};
 	
 	self.goToTag( { id: 1 } );
@@ -158,6 +159,10 @@ $(document).ready(
 		ko.applyBindings( new TagViewModel() );
 	}
 );
+
+function getTagPaths( tags ) {
+	return $.map( tags, function( tag ) { return tag.path; } );
+}
 
 function buildTagHierarchy( tag ) {
 	var hierarchy = [];
