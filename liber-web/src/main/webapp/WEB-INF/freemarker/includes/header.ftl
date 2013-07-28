@@ -9,11 +9,7 @@
 	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
 	<script src="tinymce/tinymce.min.js"></script>
 	<script src="tinymce/jquery.tinymce.min.js"></script>
-	<#if scripts?? >
-		<#list scripts as script>
-			<script src="${script}"></script>
-		</#list>
-	</#if>
+	<script src="scripts/tags.js"></script>
 </head>
 <body>
 	<div class="container-fluid">

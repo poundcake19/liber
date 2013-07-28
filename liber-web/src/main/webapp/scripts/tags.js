@@ -153,12 +153,11 @@ function TagViewModel() {
 	self.goToTag( { id: 1 } );
 }
 
-//$(document).ready(
-//	function() {
+$(document).ready(
+	function() {
 		ko.applyBindings( new TagViewModel() );
-//		tinymce.init( { selector: 'textarea' } );
-//	}
-//);
+	}
+);
 
 function buildTagHierarchy( tag ) {
 	var hierarchy = [];
