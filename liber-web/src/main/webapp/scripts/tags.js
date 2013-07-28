@@ -33,10 +33,8 @@
 	            setTimeout(function(){$(element).tinymce().remove();}, 0);
 	        });
 	
-	        //$(element).tinymce(options);
 	        setTimeout(function() { $(element).tinymce(options); }, 0);
 	        el.html(value);
-	
 	    },
 	    update: function (element, valueAccessor, allBindingsAccessor, context) {
 	        var el = $(element);
@@ -55,7 +53,6 @@
 	    }
 	};
 }(jQuery));
-
 
 function TagForm( name, parent, path ) {
 	var self = this;
@@ -147,8 +144,6 @@ function TagViewModel() {
 	
 	self.addTag = function() {
 		self.articleForm.tags.push( { path: "" } );
-//		$("#articleTags input").typeahead( { source: $.map( self.tags(), 
-//															function( tag ) { return tag.path; } ) } );
 	};
 	
 	self.goToTag( { id: 1 } );
