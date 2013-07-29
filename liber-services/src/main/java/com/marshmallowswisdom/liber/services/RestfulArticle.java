@@ -30,5 +30,9 @@ public class RestfulArticle {
 	public String getName() {
 		return article.getName();
 	}
+	
+	public String getContent() {
+		return article.getContent();
+	}
 
 }

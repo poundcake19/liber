@@ -90,9 +90,10 @@
 				</button>
 			</p>
 		</div>
-		<div class="span8" data-bind="visible: isViewArticleView">
-			<h2 data-bind="text: activeArticle().name"></h2>
-			<p>Show article here...</p>
+		<div class="span8" data-bind="visible: isViewArticleView, with: activeArticle()">
+			<h2 data-bind="text: name"></h2>
+			<div class="well" data-bind="html: content"></div>
+			<button class="btn btn-danger" data-bind="click: $parent.goToTagListing">Close</button>
 		</div>
 		<div class="span8" data-bind="visible: isCreateView">
 			<form class="form-inline">
