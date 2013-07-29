@@ -137,6 +137,10 @@ function ArticleViewModel( masterViewModel ) {
 		);
 	};
 	
+	self.deleteArticle = function( article ) {
+		alert( article.id );
+	};
+	
 	self.addTag = function() {
 		self.articleForm.tags.push( { path: "" } );
 	};
