@@ -33,6 +33,28 @@ public class Repository {
 		entityManager.close();
 		return articleVersion;
 	}
+	
+	public Article saveNewArticle( Article article, ArticleVersion firstVersion ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		firstVersion = entityManager.merge( firstVersion );
+		article = firstVersion.getArticle();
+		article.setLatestVersion( firstVersion );
+		transaction.commit();
+		entityManager.close();
+		return article;
+	}
+	
+	public Article saveArticle( Article article ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		article = entityManager.merge( article );
+		transaction.commit();
+		entityManager.close();
+		return article;
+	}
 
 	public List<Tag> retrieveTags() {
 		final EntityManager entityManager = factory.createEntityManager();

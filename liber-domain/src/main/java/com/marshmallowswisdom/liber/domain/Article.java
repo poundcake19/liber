@@ -6,10 +6,13 @@ import java.util.TreeSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +26,9 @@ public class Article {
 	private String name;
 	@OneToMany(mappedBy="article", cascade=CascadeType.ALL)
 	private Set<ArticleVersion> versions;
+	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinColumn(name="latest_version")
+	private ArticleVersion latestVersion;
 	
 	@SuppressWarnings("unused")
 	private Article() { /* for JPA */ }
@@ -42,6 +48,14 @@ public class Article {
 	
 	public void setName( final String name ) {
 		this.name = name;
+	}
+	
+	public String getContent() {
+		return latestVersion.getContent();
+	}
+	
+	public void setLatestVersion( final ArticleVersion version ) {
+		latestVersion = version;
 	}
 	
 	public Set<ArticleVersion> getVersions() {
