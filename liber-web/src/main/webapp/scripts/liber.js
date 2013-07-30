@@ -138,7 +138,18 @@ function ArticleViewModel( masterViewModel ) {
 	};
 	
 	self.deleteArticle = function( article ) {
-		alert( article.id );
+		$.ajax(
+			{
+				url: "/liber-services/articles/" + article.id, 
+				type: "DELETE", 
+				success: function() {
+					self.goToTagListing();
+					self.articles.remove( self.activeArticle );
+					self.activeArticle( { name: "", content: "" } );
+					alert( "Successfully deleted article." );
+				}
+			}
+		);
 	};
 	
 	self.addTag = function() {
