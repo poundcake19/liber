@@ -144,7 +144,8 @@ function ArticleViewModel( masterViewModel ) {
 				type: "DELETE", 
 				success: function() {
 					self.goToTagListing();
-					self.articles.remove( self.activeArticle );
+					self.articles.remove( 
+							function( item ) { return item.id == self.activeArticle().id; } );
 					self.activeArticle( { name: "", content: "" } );
 					alert( "Successfully deleted article." );
 				}
