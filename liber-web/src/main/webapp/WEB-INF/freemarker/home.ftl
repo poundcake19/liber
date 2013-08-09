@@ -139,6 +139,9 @@
 						<i class="icon-tag icon-white"></i>Add Tag
 					</button>
 				</p>
+				<div class="row-fluid" data-bind="foreach: fields">
+					<input type="text" data-bind="value: name" class="input-medium"/><br>
+				</div>
 				<p>
 					<button class="btn btn-primary" data-bind="click: createArticle">
 						<i class="icon-file icon-white"></i>Create Article

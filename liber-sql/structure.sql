@@ -35,3 +35,15 @@ create table article_version_tag(
 	foreign key(article_version_id) references article_version(id), 
 	foreign key(tag_id) references tag(id)
 );
+
+create table field(
+	id int not null auto_increment primary key,
+	name varchar(32) not null
+);
+
+create table field_value(
+	id int not null auto_increment primary key, 
+	article_version_id int not null,
+	field_id int not null,
+	value varchar(128) not null
+);

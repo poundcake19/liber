@@ -14,6 +14,7 @@ import javax.persistence.criteria.Root;
 
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
+import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.Tag;
 
 public class Repository {
@@ -155,6 +156,17 @@ public class Repository {
 		entityManager.remove( article );
 		transaction.commit();
 		entityManager.close();
+	}
+
+	public List<Field> retrieveFields() {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Field> query = criteriaBuilder.createQuery( Field.class );
+		final Root<Field> root = query.from( Field.class );
+		query.select( root );
+		final List<Field> fields = entityManager.createQuery( query ).getResultList();
+		entityManager.close();
+		return fields;
 	}
 
 }

@@ -75,6 +75,7 @@ function ArticleViewModel( masterViewModel ) {
 	self.articles = ko.observableArray( [] );
 	self.articleForm = new ArticleForm( "", "", [] );
 	self.tagPaths = [];
+	self.fields = ko.observableArray( [] );
 	
 	self.successfulCreates = ko.observableArray( [] );
 	self.successfulDeletes = ko.observableArray( [] );
@@ -168,6 +169,8 @@ function ArticleViewModel( masterViewModel ) {
 	self.addTag = function() {
 		self.articleForm.tags.push( { path: "" } );
 	};
+	
+	$.getJSON( "/liber-services/fields", self.fields );
 }
 
 function TagViewModel() {
