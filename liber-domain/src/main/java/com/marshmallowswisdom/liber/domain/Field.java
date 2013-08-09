@@ -17,6 +17,7 @@ public class Field {
 	@Column
 	private String name;
 	
+	@SuppressWarnings("unused")
 	private Field() { /* for JPA */ }
 	
 	public Field( final String name ) {
