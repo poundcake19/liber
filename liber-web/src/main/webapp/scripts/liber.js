@@ -170,7 +170,16 @@ function ArticleViewModel( masterViewModel ) {
 		self.articleForm.tags.push( { path: "" } );
 	};
 	
-	$.getJSON( "/liber-services/fields", self.fields );
+	$.getJSON( "/liber-services/fields", 
+				function( fields ) { 
+					self.fields( $.map( fields, 
+										function( field ) { 
+											return { name: field.name, value: "" };
+										}
+								)
+					);
+				}
+	);
 }
 
 function TagViewModel() {
