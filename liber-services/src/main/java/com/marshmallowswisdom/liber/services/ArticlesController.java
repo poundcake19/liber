@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.marshmallowswisdom.liber.domain.Article;
 import com.marshmallowswisdom.liber.domain.ArticleVersion;
+import com.marshmallowswisdom.liber.domain.FieldValue;
 import com.marshmallowswisdom.liber.domain.Tag;
 import com.marshmallowswisdom.liber.persistence.Repository;
 
@@ -31,6 +32,11 @@ public class ArticlesController {
 	@ResponseBody
 	public RestfulArticle createArticle( @RequestBody final ArticleForm article ) {
 		final Repository repository = new Repository();
+		final Set<FieldValue> fieldValues = new HashSet<FieldValue>();
+		for( FieldForm field : article.getFields() ) {
+			fieldValues.add( new FieldValue( repository.retrieveField( field.getId() ), 
+																		field.getValue() ) );
+		}
 		final Set<Tag> tags = new HashSet<Tag>();
 		for( String path : article.getTags() ) {
 			if( path != null && !path.isEmpty() ) {
@@ -38,7 +44,10 @@ public class ArticlesController {
 			}
 		}
 		Article domainArticle = new Article( article.getName() );
-		ArticleVersion version = new ArticleVersion( domainArticle, article.getContent(), tags );
+		ArticleVersion version = new ArticleVersion( domainArticle, 
+														article.getContent(), 
+														fieldValues, 
+														tags );
 //		domainArticle.setLatestVersion( version );
 //		version = repository.saveArticleVersion( version );
 //		domainArticle = repository.saveArticle( domainArticle );

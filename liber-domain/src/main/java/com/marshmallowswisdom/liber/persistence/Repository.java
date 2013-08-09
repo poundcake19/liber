@@ -169,4 +169,15 @@ public class Repository {
 		return fields;
 	}
 
+	public Field retrieveField( final int id ) {
+		final EntityManager entityManager = factory.createEntityManager();
+		final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		final CriteriaQuery<Field> query = criteriaBuilder.createQuery( Field.class );
+		final Root<Field> root = query.from( Field.class );
+		query.where( criteriaBuilder.equal( root.get( "id" ), id ) );
+		final Field field = entityManager.createQuery( query ).getSingleResult();
+		entityManager.close();
+		return field;
+	}
+
 }

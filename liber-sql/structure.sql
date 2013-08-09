@@ -1,3 +1,5 @@
+drop table if exists field_value;
+drop table if exists field;
 drop table if exists article_version_tag;
 alter table article drop foreign key latest_version;
 drop table if exists article_version;
@@ -45,5 +47,7 @@ create table field_value(
 	id int not null auto_increment primary key, 
 	article_version_id int not null,
 	field_id int not null,
-	value varchar(128) not null
+	value varchar(128) not null,
+	foreign key(article_version_id) references article_version(id),
+	foreign key(field_id) references field(id)
 );

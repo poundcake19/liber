@@ -2,8 +2,17 @@ package com.marshmallowswisdom.liber.services;
 
 public class FieldForm {
 	
+	private int id;
 	private String name;
 	private String value;
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId( final int id ) {
+		this.id = id;
+	}
 	
 	public String getName() {
 		return name;

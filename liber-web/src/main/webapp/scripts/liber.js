@@ -177,7 +177,11 @@ function ArticleViewModel( masterViewModel ) {
 					self.fields( fields );
 					self.articleForm.fields( $.map( fields, 
 													function( field ) { 
-														return { name: field.name, value: "" };
+														return { 
+																	id: field.id, 
+																	name: field.name, 
+																	value: "" 
+																};
 													}
 											)
 					);

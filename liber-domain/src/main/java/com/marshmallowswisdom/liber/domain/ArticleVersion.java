@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +28,8 @@ public class ArticleVersion {
 	@ManyToOne(fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="article_id", referencedColumnName="id")
 	private Article article;
+	@OneToMany( mappedBy = "articleVersion", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<FieldValue> fieldValues;
 	@ManyToMany(mappedBy="articles", cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
 	private Set<Tag> tags;
 	
@@ -46,6 +49,19 @@ public class ArticleVersion {
 		for( Tag tag : tags ) {
 			tag.addArticle( this );
 		}
+	}
+	
+	public ArticleVersion( final Article article, 
+							final String content, 
+							final Set<FieldValue> fieldValues, 
+							final Set<Tag> tags ) {
+		this.article = article;
+		this.content = content;
+		this.fieldValues = fieldValues;
+		for( FieldValue fieldValue : fieldValues ) {
+			fieldValue.setArticleVersion( this );
+		}
+		this.tags = tags;
 	}
 	
 	public Article getArticle() {
