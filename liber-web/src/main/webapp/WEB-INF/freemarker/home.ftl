@@ -115,11 +115,15 @@
 			</div>
 		</div>
 		<div class="span8" data-bind="visible: isCreateView">
-			<form>
-				<input type="text" 
-						data-bind="value: articleForm.name"
-						placeholder="Article Name" 
-						class="input-medium" />
+			<form class="form-horizontal">
+				<p>
+					<label for="name">Article Name</label>
+					<input type="text" 
+							name="name" 
+							data-bind="value: articleForm.name"
+							placeholder="Article Name" 
+							class="input-medium" />
+				</p>
 				<p>
 					<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
 				</p>
@@ -134,7 +138,10 @@
 					</button>
 				</p>
 				<div class="row-fluid" data-bind="foreach: fields">
-					<input type="text" data-bind="value: name" class="input-medium"/><br>
+					<p>
+						<label data-bind="text: name"></label>
+						<input type="text" class="input-medium"/><br>
+					</p>
 				</div>
 				<p>
 					<button class="btn btn-primary" data-bind="click: createArticle">
