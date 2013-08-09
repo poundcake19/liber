@@ -116,22 +116,18 @@
 		</div>
 		<div class="span8" data-bind="visible: isCreateView">
 			<form>
-				<p>
-					<input type="text" 
-							data-bind="value: articleForm.name"
-							placeholder="Article Name" 
-							class="input-medium" />
-				</p>
+				<input type="text" 
+						data-bind="value: articleForm.name"
+						placeholder="Article Name" 
+						class="input-medium" />
 				<p>
 					<textarea class="tinymce" data-bind="tinymce: articleForm.content"></textarea>
 				</p>
-				<p>
-					<div id="articleTags" data-bind="foreach: articleForm.tags">
-							<input type="text" 
-									data-bind="typeahead: $parent.tagPaths, value: path" 
-									placeholder="Tag Path"/>
-					</div>
-				</p>
+				<div id="articleTags" data-bind="foreach: articleForm.tags">
+						<input type="text" 
+								data-bind="typeahead: $parent.tagPaths, value: path" 
+								placeholder="Tag Path"/><br>
+				</div>
 				<p>
 					<button class="btn btn-info" data-bind="click: addTag">
 						<i class="icon-tag icon-white"></i>Add Tag
