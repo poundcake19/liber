@@ -115,7 +115,7 @@
 			</div>
 		</div>
 		<div class="span8" data-bind="visible: isCreateView">
-			<form class="form-inline">
+			<form>
 				<p>
 					<input type="text" 
 							data-bind="value: articleForm.name"
@@ -127,11 +127,9 @@
 				</p>
 				<p>
 					<div id="articleTags" data-bind="foreach: articleForm.tags">
-						<p>
 							<input type="text" 
 									data-bind="typeahead: $parent.tagPaths, value: path" 
 									placeholder="Tag Path"/>
-						</p>
 					</div>
 				</p>
 				<p>
