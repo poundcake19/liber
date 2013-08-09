@@ -8,6 +8,7 @@ public class ArticleForm {
 	
 	private String name;
 	private String content;
+	private List<FieldForm> fields;
 	private List<String> tags;
 	
 	public ArticleForm() {
@@ -30,6 +31,14 @@ public class ArticleForm {
 
 	public void setContent( final String content ) {
 		this.content = content;
+	}
+	
+	public List<FieldForm> getFields() {
+		return fields;
+	}
+	
+	public void setFields( final List<FieldForm> fields ) {
+		this.fields = fields;
 	}
 
 	public List<String> getTags() {

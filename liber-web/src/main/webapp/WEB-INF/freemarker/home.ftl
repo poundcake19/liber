@@ -137,10 +137,10 @@
 						<i class="icon-tag icon-white"></i>Add Tag
 					</button>
 				</p>
-				<div class="row-fluid" data-bind="foreach: fields">
+				<div class="row-fluid" data-bind="foreach: articleForm.fields">
 					<p>
 						<label data-bind="text: name"></label>
-						<input type="text" class="input-medium"/><br>
+						<input type="text" class="input-medium" data-bind="value: value"/><br>
 					</p>
 				</div>
 				<p>

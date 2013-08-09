@@ -66,6 +66,7 @@ function ArticleForm( name, content, tags ) {
 	self.name = ko.observable( name );
 	self.content = ko.observable( content );
 	self.tags = ko.observableArray( tags );
+	self.fields = ko.observableArray( [] );
 }
 
 function ArticleViewModel( masterViewModel ) {
@@ -133,7 +134,8 @@ function ArticleViewModel( masterViewModel ) {
 		var article = { 
 			name: self.articleForm.name(), 
 			content: self.articleForm.content(), 
-			tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } )
+			tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } ),
+			fields: self.articleForm.fields()
 		};
 		$.ajax(
 			{
@@ -172,11 +174,12 @@ function ArticleViewModel( masterViewModel ) {
 	
 	$.getJSON( "/liber-services/fields", 
 				function( fields ) { 
-					self.fields( $.map( fields, 
-										function( field ) { 
-											return { name: field.name, value: "" };
-										}
-								)
+					self.fields( fields );
+					self.articleForm.fields( $.map( fields, 
+													function( field ) { 
+														return { name: field.name, value: "" };
+													}
+											)
 					);
 				}
 	);
