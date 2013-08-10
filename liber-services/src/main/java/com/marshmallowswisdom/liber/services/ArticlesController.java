@@ -48,9 +48,6 @@ public class ArticlesController {
 														article.getContent(), 
 														fieldValues, 
 														tags );
-//		domainArticle.setLatestVersion( version );
-//		version = repository.saveArticleVersion( version );
-//		domainArticle = repository.saveArticle( domainArticle );
 		domainArticle = repository.saveNewArticle( domainArticle, version );
 		return new RestfulArticle( domainArticle );
 	}
