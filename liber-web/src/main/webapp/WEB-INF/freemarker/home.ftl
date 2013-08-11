@@ -9,10 +9,10 @@
 		<div class="span8" data-bind="visible: isHomeView">
 			<p>Navigate to a tag on the left to view the associated articles.</p>
 		</div>
-		<div class="span8" data-bind="visible: isTagListingView, template: 'tagListingView'"></div>
+		<div class="span8" data-bind="visible: isTagListingView, template: 'tagArticlesListing'"></div>
 		<div class="span8" 
 			data-bind="visible: isViewArticleView, 
-						template: { name: 'viewArticleView', data: activeArticle() }">
+						template: { name: 'viewArticle', data: activeArticle() }">
 		</div>
 		<div class="span8" data-bind="visible: isCreateView, template: 'createArticle'"></div>
 	<!-- /ko -->
