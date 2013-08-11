@@ -38,6 +38,10 @@ public class FieldValue {
 		this.articleVersion = articleVersion;
 	}
 	
+	public String getName() {
+		return field.getName();
+	}
+	
 	public String getValue() {
 		return value;
 	}

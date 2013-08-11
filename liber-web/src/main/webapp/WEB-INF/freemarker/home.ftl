@@ -108,7 +108,7 @@
 			<h2 data-bind="text: name"></h2>
 			<div class="well" data-bind="html: content"></div>
 			<p data-bind="foreach: fields">
-				<span data-bind="text: name"></span> <span data-bind="text: value"></span><br>
+				<span data-bind="text: name"></span>: <span data-bind="text: value"></span><br>
 			</p>
 			<div class="row-fluid">
 				<button class="btn btn-warning" data-bind="click: $parent.goToTagListing">Close</button>
