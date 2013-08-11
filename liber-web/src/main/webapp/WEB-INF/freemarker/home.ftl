@@ -9,41 +9,7 @@
 		<div class="span8" data-bind="visible: isHomeView">
 			<p>Navigate to a tag on the left to view the associated articles.</p>
 		</div>
-		<div class="span8" data-bind="visible: isTagListingView">
-			<h2>Articles</h2>
-			<!-- ko foreach: successfulCreates -->
-				<div class="alert alert-success">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<p>Successfully created 
-						<a href="#" data-bind="text: name, click: $parent.goToViewArticle"></a>
-					</p>
-				</div>
-			<!-- /ko -->
-			<!-- ko foreach: successfulDeletes -->
-				<div class="alert alert-success">
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					<p>Successfully deleted <span data-bind="text:name"></span></p>
-				</div>
-			<!-- /ko -->
-			<table class="table table-striped table-hover" data-bind="visible: articles().length > 0">
-				<thead>
-					<tr>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<tbody data-bind="foreach: articles">
-					<tr>
-						<td data-bind="text: name, click: $parent.goToViewArticle"></td>
-					</tr>
-				</tbody>
-			</table>
-			<p data-bind="visible: articles().length == 0">No articles exist.</p>
-			<p>
-				<button class="btn btn-primary" data-bind="click: goToCreateArticle">
-					Create Article
-				</button>
-			</p>
-		</div>
+		<div class="span8" data-bind="visible: isTagListingView, template: 'tagListingView'"></div>
 		<div class="span8" data-bind="visible: isViewArticleView, with: activeArticle()">
 			<h2 data-bind="text: name"></h2>
 			<div class="well" data-bind="html: content"></div>
