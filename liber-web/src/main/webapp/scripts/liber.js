@@ -54,6 +54,8 @@
 	};
 }(jQuery));
 
+infuser.defaults.templateUrl = "templates";
+
 function TagForm( name, parent, path ) {
 	var self = this;
 	self.name = ko.observable( name );

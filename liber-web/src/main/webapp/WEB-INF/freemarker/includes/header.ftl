@@ -10,6 +10,9 @@
 	<script src="tinymce/jquery.tinymce.min.js"></script>
 	<script src="<@spring.url "/scripts/knockout-2.3.0.js"/>"></script>
 	<script src="scripts/ko-bootstrap-typeahead.js"></script>
+	<script src="scripts/TrafficCop-0.3.0.js"></script>
+	<script src="scripts/infuser-0.2.0.js"></script>
+	<script src="scripts/koExternalTemplateEngine-2.0.5.min.js"></script>
 	<script src="scripts/liber.js"></script>
 </head>
 <body>

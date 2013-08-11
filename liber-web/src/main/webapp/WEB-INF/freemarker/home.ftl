@@ -2,6 +2,7 @@
 <#include "/includes/header.ftl"/>
 	<p>Liber is an awesome web content management system!</p>
 </div>
+<div data-bind="template: { name: 'test' }"></div>
 <div class="row-fluid">
 	<ul class="breadcrumb" data-bind="foreach: tagHierarchy">
 		<li data-bind="visible: $index() == ($root.tagHierarchy().length - 1)">
