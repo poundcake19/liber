@@ -2,19 +2,7 @@
 <#include "/includes/header.ftl"/>
 	<p>Liber is an awesome web content management system!</p>
 </div>
-<div data-bind="template: { name: 'test' }"></div>
-<div class="row-fluid">
-	<ul class="breadcrumb" data-bind="foreach: tagHierarchy">
-		<li data-bind="visible: $index() == ($root.tagHierarchy().length - 1)">
-			<span class="divider">/</span>
-			<span data-bind="text: name"></span>
-		</li>
-		<li data-bind="visible: $index() != ($root.tagHierarchy().length - 1)">
-			<span class="divider">/</span>
-			<a href="#" data-bind="text: name, click: $root.goToTag"></a>
-		</li>
-	</ul>
-</div>
+<div class="row-fluid" data-bind="template: 'breadcrumbs'"></div>
 <div class="row-fluid">
 	<div class="span4">
 		<div class="well">
