@@ -10,18 +10,9 @@
 			<p>Navigate to a tag on the left to view the associated articles.</p>
 		</div>
 		<div class="span8" data-bind="visible: isTagListingView, template: 'tagListingView'"></div>
-		<div class="span8" data-bind="visible: isViewArticleView, with: activeArticle()">
-			<h2 data-bind="text: name"></h2>
-			<div class="well" data-bind="html: content"></div>
-			<p data-bind="foreach: fields">
-				<span data-bind="text: name"></span>: <span data-bind="text: value"></span><br>
-			</p>
-			<div class="row-fluid">
-				<button class="btn btn-warning" data-bind="click: $parent.goToTagListing">Close</button>
-				<button class="btn btn-danger" data-bind="click: $parent.deleteArticle">
-					<i class="icon-file icon-white"></i>Delete Article
-				</button>
-			</div>
+		<div class="span8" 
+			data-bind="visible: isViewArticleView, 
+						template: { name: 'viewArticleView', data: activeArticle() }">
 		</div>
 		<div class="span8" data-bind="visible: isCreateView">
 			<form class="form-horizontal">
