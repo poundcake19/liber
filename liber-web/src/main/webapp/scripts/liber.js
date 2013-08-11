@@ -85,7 +85,7 @@ function ArticleViewModel( masterViewModel ) {
 	self.tagListingView = "tagListing";
 	self.viewArticleView = "view";
 	self.createView = "create";
-	self.activeArticle = ko.observable( { name: "", content: "" } );
+	self.activeArticle = ko.observable( { name: "", content: "", fields: [] } );
 	self.articleView = ko.observable( self.homeView );
 	self.isHomeView = ko.computed( function() {
 			return self.articleView() == self.homeView;

@@ -2,8 +2,10 @@ package com.marshmallowswisdom.liber.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.marshmallowswisdom.liber.domain.Article;
+import com.marshmallowswisdom.liber.domain.FieldValue;
 
 public class RestfulArticle {
 	
@@ -33,6 +35,10 @@ public class RestfulArticle {
 	
 	public String getContent() {
 		return article.getContent();
+	}
+	
+	public Set<FieldValue> getFields() {
+		return article.getFieldValues();
 	}
 
 }

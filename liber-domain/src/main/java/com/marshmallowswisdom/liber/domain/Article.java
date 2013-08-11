@@ -62,4 +62,8 @@ public class Article {
 		return versions;
 	}
 
+	public Set<FieldValue> getFieldValues() {
+		return latestVersion.getFieldValues();
+	}
+
 }

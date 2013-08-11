@@ -62,6 +62,9 @@ public class ArticleVersion {
 			fieldValue.setArticleVersion( this );
 		}
 		this.tags = tags;
+		for( Tag tag : tags ) {
+			tag.addArticle( this );
+		}
 	}
 	
 	public Article getArticle() {
@@ -90,6 +93,10 @@ public class ArticleVersion {
 	
 	public void removeTags() {
 		tags = new HashSet<Tag>();
+	}
+
+	public Set<FieldValue> getFieldValues() {
+		return fieldValues;
 	}
 
 }
