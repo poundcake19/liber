@@ -14,6 +14,7 @@
 	<script src="scripts/infuser-0.2.0.js"></script>
 	<script src="scripts/koExternalTemplateEngine-2.0.5.min.js"></script>
 	<script src="scripts/liber.js"></script>
+	<script src="scripts/field.js"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -30,6 +31,7 @@
 								<i class="icon-file"></i>Create Article
 							</a>
 						</li>
+						<li><a href="#" data-bind="click: goToCreateFieldView">Create Field</a></li>
 					</ul>
 				</div>
 			</div>

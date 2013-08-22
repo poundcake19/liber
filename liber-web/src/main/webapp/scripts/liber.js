@@ -194,7 +194,16 @@ function ArticleViewModel( masterViewModel ) {
 function TagViewModel() {
 	var self = this;
 	
+	self.contentView = "content";
+	self.createFieldView = "createField";
+	self.view = ko.observable( self.contentView );
+	self.isContentView = ko.computed( function() { return self.view() == self.contentView; } );
+	self.isCreateFieldView = ko.computed( function() { return self.view() == self.createFieldView; } );
+	self.goToCreateFieldView = function() { self.view( self.createFieldView ); };
+	self.goToContentView = function() { self.view( self.contentView );	};
+	
 	self.articleViewModel = new ArticleViewModel( self );
+	self.fieldViewModel = new FieldViewModel( self );
 	
 	self.tagForm = new TagForm( "", null );
 	self.tags = ko.observableArray( [] );

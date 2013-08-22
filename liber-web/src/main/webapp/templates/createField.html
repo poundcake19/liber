@@ -1,0 +1,8 @@
+<form>
+	<label for="name">Field Name</label>
+	<input type="text" name="name" data-bind="value: form.name"/>
+	<p>
+		<button class="btn btn-primary" data-bind="click: createField">Create Field</button>
+		<button class="btn btn-danger" data-bind="click: $parent.goToContentView">Cancel</button>
+	</p>
+</form>
