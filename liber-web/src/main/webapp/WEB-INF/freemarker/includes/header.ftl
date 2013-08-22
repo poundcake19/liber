@@ -31,7 +31,11 @@
 								<i class="icon-file"></i>Create Article
 							</a>
 						</li>
-						<li><a href="#" data-bind="click: goToCreateFieldView">Create Field</a></li>
+						<li>
+							<a href="#" data-bind="click: goToCreateFieldView">
+								<i class="icon-th-list"></i>Create Field
+							</a>
+						</li>
 					</ul>
 				</div>
 			</div>
