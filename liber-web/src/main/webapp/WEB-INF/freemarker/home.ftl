@@ -6,14 +6,17 @@
 	<link href="<@spring.url "/bootstrap/bootstrap.min.css"/>" rel="stylesheet"/>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 	<script src="<@spring.url "/bootstrap/bootstrap.min.js"/>"></script>
+	<!-- tinymce scripts --!>
 	<script src="<@spring.url "/tinymce/tinymce.min.js"/>"></script>
 	<script src="<@spring.url "/tinymce/jquery.tinymce.min.js"/>"></script>
-	<script src="<@spring.url "/scripts/knockout-2.3.0.js"/>"></script>
-	<script src="<@spring.url "/scripts/knockout_tinymce.js"/>"></script>
-	<script src="<@spring.url "/scripts/ko-bootstrap-typeahead.js"/>"></script>
-	<script src="<@spring.url "/scripts/TrafficCop-0.3.0.js"/>"></script>
-	<script src="<@spring.url "/scripts/infuser-0.2.0.js"/>"></script>
-	<script src="<@spring.url "/scripts/koExternalTemplateEngine-2.0.5.min.js"/>"></script>
+	<!-- knockout scripts --!>
+	<script src="<@spring.url "/scripts/knockout/knockout-2.3.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/knockout_tinymce.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/ko-bootstrap-typeahead.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/TrafficCop-0.3.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/infuser-0.2.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout/koExternalTemplateEngine-2.0.5.min.js"/>"></script>
+	<!-- liber scripts --!>
 	<script src="<@spring.url "/scripts/liber.js"/>"></script>
 	<script src="<@spring.url "/scripts/ArticleViewModel.js"/>"></script>
 	<script src="<@spring.url "/scripts/FieldViewModel.js"/>"></script>
