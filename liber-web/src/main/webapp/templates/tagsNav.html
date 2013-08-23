@@ -2,7 +2,7 @@
 	<ul class="nav nav-list" data-bind="visible: tags().length > 0">
 		<li class="nav-header"><i class="icon-tags"></i>Tags</li>
 		<!-- ko foreach: tags -->
-			<li><a href="#" data-bind="text: name, click: $root.goToTag"></a></li>
+			<li><a href="#" data-bind="text: name, click: $parent.goToTag"></a></li>
 		<!-- /ko -->
 		<li class="divider"></li>
 	</ul>
@@ -27,7 +27,7 @@
 				<div class="alert alert-success">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					<p>Tag created successfully! View 
-						<a href="#" data-bind="text: name, click: $root.goToTag"></a>
+						<a href="#" data-bind="text: name, click: $parent.goToTag"></a>
 					</p>
 				</div>
 			<!-- /ko -->

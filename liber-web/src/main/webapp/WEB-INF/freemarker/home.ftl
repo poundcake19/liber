@@ -17,6 +17,7 @@
 	<script src="<@spring.url "/scripts/liber.js"/>"></script>
 	<script src="<@spring.url "/scripts/articles.js"/>"></script>
 	<script src="<@spring.url "/scripts/field.js"/>"></script>
+	<script src="<@spring.url "/scripts/tags.js"/>"></script>
 </head>
 <body>
 	<div class="container-fluid">
@@ -47,9 +48,13 @@
 				<p>Liber is an awesome web content management system!</p>
 			</div>
 			<div class="row-fluid" data-bind="if: isContentView">
-				<div class="row-fluid" data-bind="template: 'breadcrumbs'"></div>
+				<div class="row-fluid" 
+						data-bind="template: { name: 'breadcrumbs', data: tagViewModel }">
+				</div>
 				<div class="row-fluid">
-					<div class="span4" data-bind="template: 'tagsNav'"></div>
+					<div class="span4" 
+							data-bind="template: { name: 'tagsNav', data: tagViewModel }">
+					</div>
 					<!-- ko with: articleViewModel -->
 						<div class="span8" data-bind="visible: isHomeView">
 							<p>Navigate to a tag on the left to view the associated articles.</p>
