@@ -22,21 +22,3 @@ $(document).ready(
 		ko.applyBindings( new MasterViewModel() );
 	}
 );
-
-function buildTagHierarchy( tag ) {
-	var hierarchy = [];
-	var currentTag = tag;
-	while( currentTag != null ) {
-		hierarchy.unshift( currentTag );
-		currentTag = currentTag.parent;
-	}
-	return hierarchy;
-}
-
-function getLink( object, relationship ) {
-	for( var i = 0; i < object.links.length; i++ ) {
-		if( object.links[i].relationship == relationship ) {
-			return object.links[i].url;
-		}
-	}
-}
