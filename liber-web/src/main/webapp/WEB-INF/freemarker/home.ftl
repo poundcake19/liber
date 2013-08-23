@@ -9,6 +9,7 @@
 	<script src="<@spring.url "/tinymce/tinymce.min.js"/>"></script>
 	<script src="<@spring.url "/tinymce/jquery.tinymce.min.js"/>"></script>
 	<script src="<@spring.url "/scripts/knockout-2.3.0.js"/>"></script>
+	<script src="<@spring.url "/scripts/knockout_tinymce.js"/>"></script>
 	<script src="<@spring.url "/scripts/ko-bootstrap-typeahead.js"/>"></script>
 	<script src="<@spring.url "/scripts/TrafficCop-0.3.0.js"/>"></script>
 	<script src="<@spring.url "/scripts/infuser-0.2.0.js"/>"></script>
