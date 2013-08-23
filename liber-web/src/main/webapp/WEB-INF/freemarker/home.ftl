@@ -15,9 +15,9 @@
 	<script src="<@spring.url "/scripts/infuser-0.2.0.js"/>"></script>
 	<script src="<@spring.url "/scripts/koExternalTemplateEngine-2.0.5.min.js"/>"></script>
 	<script src="<@spring.url "/scripts/liber.js"/>"></script>
-	<script src="<@spring.url "/scripts/articles.js"/>"></script>
-	<script src="<@spring.url "/scripts/field.js"/>"></script>
-	<script src="<@spring.url "/scripts/tags.js"/>"></script>
+	<script src="<@spring.url "/scripts/ArticleViewModel.js"/>"></script>
+	<script src="<@spring.url "/scripts/FieldViewModel.js"/>"></script>
+	<script src="<@spring.url "/scripts/TagViewModel.js"/>"></script>
 </head>
 <body>
 	<div class="container-fluid">
