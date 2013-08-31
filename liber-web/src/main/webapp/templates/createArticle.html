@@ -23,7 +23,12 @@
 	<div class="row-fluid" data-bind="foreach: articleForm.fields">
 		<p>
 			<label data-bind="text: name"></label>
+			<!-- ko if: type == 'text' -->
 			<input type="text" class="input-medium" data-bind="value: value"/><br>
+			<!-- /ko -->
+			<!-- ko if: type == 'html' -->
+			<textarea class="tinymce" data-bind="tinymce: value"></textarea><br>
+			<!-- /ko -->
 		</p>
 	</div>
 	<p>

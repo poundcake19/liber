@@ -109,6 +109,7 @@ function ArticleViewModel( masterViewModel ) {
 														return { 
 																	id: field.id, 
 																	name: field.name, 
+																	type: field.type, 
 																	value: "" 
 																};
 													}

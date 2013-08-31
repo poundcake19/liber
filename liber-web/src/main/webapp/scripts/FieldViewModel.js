@@ -2,10 +2,10 @@ function FieldViewModel( masterViewModel ) {
 	var self = this;
 	self.masterViewModel = masterViewModel;
 	
-	self.form = new FieldForm( "" );
+	self.form = new FieldForm( "", "text" );
 	
 	self.createField = function() {
-		var field = { name: self.form.name() };
+		var field = { name: self.form.name(), type: self.form.type() };
 		$.ajax(
 			{
 				url: "/liber-services/fields", 
@@ -21,8 +21,9 @@ function FieldViewModel( masterViewModel ) {
 	};
 }
 
-function FieldForm( name ) {
+function FieldForm( name, type ) {
 	var self = this;
 	
 	self.name = ko.observable( name );
+	self.type = ko.observable( type );
 }

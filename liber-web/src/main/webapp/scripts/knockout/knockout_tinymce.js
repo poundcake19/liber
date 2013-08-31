@@ -3,7 +3,7 @@
 	init_queue.resolve();
 	ko.bindingHandlers.tinymce = {
 	    init: function (element, valueAccessor, allBindingsAccessor, context) {
-	        var options    = allBindingsAccessor().tinymceOptions || {
+	        var options = allBindingsAccessor().tinymceOptions || {
 						menubar : false,
 						statusbar : false,
 						paste_as_text: true,
@@ -13,28 +13,45 @@
 	        var modelValue = valueAccessor();
 	        var value      = ko.utils.unwrapObservable(valueAccessor());
 	        var el         = $(element);
+	        
+	        if( !element.id ) {
+	        	element.id = tinyMCE.DOM.uniqueId();
+	        }
 	
 	        //handle edits made in the editor. Updates after an undo point is reached.
 	        options.setup = function (ed) {
-						ed.on('change', function(e) {
-							if (ko.isWriteableObservable(modelValue)) {
-	              modelValue(ed.getContent());
-	          	}
-						});
-						ed.on('keyup', function(e) {
-							if (ko.isWriteableObservable(modelValue)) {
-	              modelValue(ed.getContent({format: 'raw'}));
-	          	}
-				    });
+				ed.on('change', function(e) {
+					if (ko.isWriteableObservable(modelValue)) {
+						modelValue(ed.getContent());
+					}
+				});
+				ed.on('keyup', function(e) {
+					if (ko.isWriteableObservable(modelValue)) {
+						modelValue(ed.getContent({format: 'raw'}));
+					}
+				});
 	        };
 	
 	        //handle destroying an editor 
-	        ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-	            setTimeout(function(){$(element).tinymce().remove();}, 0);
-	        });
+			ko.utils.domNodeDisposal.addDisposeCallback(
+				element, 
+				function () {
+					setTimeout(
+						function() {
+							$( element ).tinymce().remove();
+						}, 
+						0 
+					);
+				} 
+			);
 	
-	        setTimeout(function() { $(element).tinymce(options); }, 0);
-	        el.html(value);
+	        setTimeout( 
+	        	function() { 
+	        		$( element ).tinymce( options ); 
+	        	}, 
+	        	0 
+	        );
+	        el.html( value );
 	    },
 	    update: function (element, valueAccessor, allBindingsAccessor, context) {
 	        var el = $(element);
@@ -44,11 +61,14 @@
 	        //handle programmatic updates to the observable
 	        // also makes sure it doesn't update it if it's the same. 
 	        // otherwise, it will reload the instance, causing the cursor to jump.
-	        if (id !== undefined ){
-	            var content = tinyMCE.get(id).getContent({format: 'raw'});
-	            if (content !== value) {
-	                el.html(value);
-	            }
+	        if( id !== undefined ) {
+	        	var tinyMceElement = tinyMCE.get( id );
+	        	if( tinyMceElement ) {
+		        	var content = tinyMceElement.getContent( { format: 'raw' } );
+		            if( content !== value ) {
+		                el.html(value);
+		            }
+	        	}
 	        }
 	    }
 	};
