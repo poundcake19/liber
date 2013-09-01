@@ -64,7 +64,7 @@ function ArticleViewModel( masterViewModel ) {
 			name: self.articleForm.name(), 
 			content: self.articleForm.content(), 
 			tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } ),
-			fields: self.articleForm.fields()
+			fields: ko.toJS( self.articleForm.fields )
 		};
 		$.ajax(
 			{
@@ -110,7 +110,7 @@ function ArticleViewModel( masterViewModel ) {
 																	id: field.id, 
 																	name: field.name, 
 																	type: field.type, 
-																	value: "" 
+																	value: ko.observable()
 																};
 													}
 											)
