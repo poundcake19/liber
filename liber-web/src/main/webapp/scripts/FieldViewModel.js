@@ -26,4 +26,12 @@ function FieldForm( name, type ) {
 	
 	self.name = ko.observable( name );
 	self.type = ko.observable( type );
+	self.values = ko.observableArray( [] );
+	
+	self.addValue = function() {
+		self.values.push( { value: "" } );
+	};
+	self.removeValue = function( value ) {
+		self.values.remove( value );
+	};
 }
