@@ -2,6 +2,8 @@ function FieldViewModel( masterViewModel ) {
 	var self = this;
 	self.masterViewModel = masterViewModel;
 	
+	self.fields = ko.observableArray( [] );
+	
 	self.form = new FieldForm( "", "text" );
 	
 	self.createField = function() {
@@ -20,6 +22,8 @@ function FieldViewModel( masterViewModel ) {
 			}
 		);
 	};
+	
+	$.getJSON( "/liber-services/fields", function( fields ) { self.fields( fields ); } );
 }
 
 function FieldForm( name, type ) {
