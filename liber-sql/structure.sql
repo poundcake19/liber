@@ -51,7 +51,7 @@ create table field_value(
 	type varchar(16) not null,
 	value varchar(128) not null,
 	parent_field_value_id int,
-	path varchar(192),
+	path varchar(192) null,
 	foreign key(field_id) references field(id),
 	foreign key(parent_field_value_id) references field_value(id)
 );

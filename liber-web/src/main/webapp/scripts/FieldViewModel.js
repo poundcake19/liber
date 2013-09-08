@@ -3,8 +3,28 @@ function FieldViewModel( masterViewModel ) {
 	self.masterViewModel = masterViewModel;
 	
 	self.fields = ko.observableArray( [] );
-	
 	self.form = new FieldForm( "", "text" );
+	
+	self.createView = "create";
+	self.listingView = "listing";
+	self.view = ko.observable( self.listingView );
+	self.isCreateView = ko.computed( 
+		function() {
+			var view = self.view();
+			return view == self.createView;
+		}
+	);
+	self.isListingView = ko.computed(
+		function() {
+			return self.view() == self.listingView;
+		}
+	);
+	self.goToCreateView = function() {
+		self.view( self.createView );
+	};
+	self.goToListingView = function() {
+		self.view( self.listingView );
+	};
 	
 	self.createField = function() {
 //		var field = { name: self.form.name(), type: self.form.type() };
@@ -33,15 +53,15 @@ function FieldForm( name, type ) {
 	self.type = ko.observable( type );
 	self.values = ko.observableArray( [] );
 	
-	self.activeHierarchicalValue = ko.observable( 
-		{ 
-			value: "_root", 
-			parent: null, 
-			children: ko.observableArray( [] ) 
-		}
-	);
-	self.hierarchicalValue = ko.observable( "" );
-	self.valueHierarchy = ko.observableArray( buildValueHierarchy( self.activeHierarchicalValue() ) );
+//	self.activeHierarchicalValue = ko.observable( 
+//		{ 
+//			value: "_root", 
+//			parent: null, 
+//			children: ko.observableArray( [] ) 
+//		}
+//	);
+//	self.hierarchicalValue = ko.observable( "" );
+//	self.valueHierarchy = ko.observableArray( buildValueHierarchy( self.activeHierarchicalValue() ) );
 	
 	self.addValue = function() {
 		self.values.push( { value: "" } );
