@@ -7,7 +7,7 @@
 	</thead>
 	<tbody data-bind="foreach: fields">
 		<tr>
-			<td data-bind="text: name"></td>
+			<td data-bind="text: name, click: $parent.goToViewView"></td>
 		</tr>
 	</tbody>
 </table>

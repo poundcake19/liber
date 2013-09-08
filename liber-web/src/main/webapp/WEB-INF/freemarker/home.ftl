@@ -75,12 +75,15 @@
 				</div>
 			</div>
 			<div class="row-fluid" data-bind="if: isFieldView">
-				<div data-bind="template: { name: 'fieldListing', 
-											data: fieldViewModel, 
-											if: fieldViewModel.isListingView }"></div>
-				<div data-bind="template: { name: 'createField', 
-											data: fieldViewModel, 
-											if: fieldViewModel.isCreateView }"></div>
+				<!-- ko with: fieldViewModel -->
+					<div data-bind="template: { name: 'fieldListing', 
+												if: isListingView }"></div>
+					<div data-bind="template: { name: 'viewField', 
+												data: activeField, 
+												if: isViewView }"></div>
+					<div data-bind="template: { name: 'createField', 
+												if: isCreateView }"></div>
+				<!-- /ko -->
 			</div>
 		</div>
 	</div>

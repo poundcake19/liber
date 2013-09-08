@@ -2,21 +2,27 @@ function FieldViewModel( masterViewModel ) {
 	var self = this;
 	self.masterViewModel = masterViewModel;
 	
+	self.activeField = ko.observable();
 	self.fields = ko.observableArray( [] );
 	self.form = new FieldForm( "", "text" );
-	
+
 	self.createView = "create";
 	self.listingView = "listing";
+	self.viewView = "view";
 	self.view = ko.observable( self.listingView );
 	self.isCreateView = ko.computed( 
-		function() {
-			var view = self.view();
-			return view == self.createView;
-		}
-	);
+			function() {
+				return self.view() == self.createView;
+			}
+		);
 	self.isListingView = ko.computed(
 		function() {
 			return self.view() == self.listingView;
+		}
+	);
+	self.isViewView = ko.computed(
+		function() {
+			return self.view() == self.viewView;
 		}
 	);
 	self.goToCreateView = function() {
@@ -24,6 +30,10 @@ function FieldViewModel( masterViewModel ) {
 	};
 	self.goToListingView = function() {
 		self.view( self.listingView );
+	};
+	self.goToViewView = function( field ) {
+		self.activeField( field );
+		self.view( self.viewView );
 	};
 	
 	self.createField = function() {
@@ -42,6 +52,9 @@ function FieldViewModel( masterViewModel ) {
 				contentType: "application/json"
 			}
 		);
+	};
+	self.deleteField = function() {
+		alert( "Needs implemented" );
 	};
 	
 	$.getJSON( "/liber-services/fields", function( fields ) { self.fields( fields ); } );
