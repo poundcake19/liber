@@ -21,26 +21,6 @@
 			<button class="btn btn-info" data-bind="click: form.addValue">Add Value</button>
 		</p>
 	<!-- /ko -->
-	<!-- ko if: form.type() == 'hierarchical' -->
-		<p>Values</p>
-		<ul class="breadcrumb" data-bind="foreach: form.valueHierarchy">
-			<li data-bind="visible: $index() == ($parent.form.valueHierarchy().length - 1)">
-				<span class="divider">/</span>
-				<span data-bind="text: value"></span>
-			</li>
-			<li data-bind="visible: $index() != ($parent.form.valueHierarchy().length - 1)">
-				<span class="divider">/</span>
-				<a href="#" data-bind="text: value, click: $parent.form.goToValue"></a>
-			</li>
-		</ul>
-		<ul data-bind="foreach: form.activeHierarchicalValue().children">
-			<li><a href="#" data-bind="text: value, click: $parent.form.goToValue"></a></li>
-		</ul>
-		<p>
-			<input type="text" data-bind="value: form.hierarchicalValue"/>
-			<button class="btn btn-info" data-bind="click: form.addHierarchicalValue">Add Value</button>
-		</p>
-	<!-- /ko -->
 	<p>
 		<button class="btn btn-primary" data-bind="click: createField">Create Field</button>
 		<button class="btn btn-danger" data-bind="click: goToListingView">Cancel</button>

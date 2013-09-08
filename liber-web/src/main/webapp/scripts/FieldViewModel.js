@@ -5,6 +5,25 @@ function FieldViewModel( masterViewModel ) {
 	self.activeField = ko.observable();
 	self.fields = ko.observableArray( [] );
 	self.form = new FieldForm( "", "text" );
+	
+	self.valueHierarchy = ko.observableArray( buildValueHierarchy() );
+	self.activeValue = ko.observable();
+	self.newValueText = ko.observable();
+	self.createHierarchicalValue = function() {
+		var newValue = {
+			value: self.newValueText(), 
+			parent: self.activeValue(), 
+			children: ko.observableArray( [] )
+		};
+		var activeValue = self.activeValue();
+		activeValue.children.push( newValue );
+		self.newValueText( "" );
+		alert( "Persistence needs implemented." );
+	};
+	self.goToValue = function( value ) {
+		self.activeValue( value );
+		self.valueHierarchy( buildValueHierarchy( value ) );
+	};
 
 	self.createView = "create";
 	self.listingView = "listing";
@@ -33,6 +52,11 @@ function FieldViewModel( masterViewModel ) {
 	};
 	self.goToViewView = function( field ) {
 		self.activeField( field );
+		if( field.type == 'hierarchical' ) {
+			alert( "Auto load option from db" );
+			self.activeValue( { value: "_root", parent: null, children: ko.observableArray( [] ) } );
+			self.valueHierarchy( buildValueHierarchy( self.activeValue() ) );
+		}
 		self.view( self.viewView );
 	};
 	
@@ -66,16 +90,6 @@ function FieldForm( name, type ) {
 	self.name = ko.observable( name );
 	self.type = ko.observable( type );
 	self.values = ko.observableArray( [] );
-	
-//	self.activeHierarchicalValue = ko.observable( 
-//		{ 
-//			value: "_root", 
-//			parent: null, 
-//			children: ko.observableArray( [] ) 
-//		}
-//	);
-//	self.hierarchicalValue = ko.observable( "" );
-//	self.valueHierarchy = ko.observableArray( buildValueHierarchy( self.activeHierarchicalValue() ) );
 	
 	self.addValue = function() {
 		self.values.push( { value: "" } );

@@ -1,4 +1,26 @@
 <h2 data-bind="text: name"></h2>
+<!-- ko if: type == 'hierarchical' -->
+	<p>Values</p>
+	<ul class="breadcrumb" data-bind="foreach: $parent.valueHierarchy">
+		<li data-bind="visible: $index() == ($parents[1].valueHierarchy().length - 1)">
+			<span class="divider">/</span>
+			<span data-bind="text: value"></span>
+		</li>
+		<li data-bind="visible: $index() != ($parents[1].valueHierarchy().length - 1)">
+			<span class="divider">/</span>
+			<a href="#" data-bind="text: value, click: $parents[1].goToValue"></a>
+		</li>
+	</ul>
+	<ul data-bind="foreach: $parent.activeValue().children">
+		<li><a href="#" data-bind="text: value, click: $parents[1].goToValue"></a></li>
+	</ul>
+	<p>
+		<input type="text" data-bind="value: $parent.newValueText"/>
+		<button class="btn btn-info" data-bind="click: $parent.createHierarchicalValue">
+			Add Value
+		</button>
+	</p>
+<!-- /ko -->
 <div class="row-fluid">
 	<button class="btn btn-warning" data-bind="click: $parent.goToListingView">Close</button>
 	<button class="btn btn-danger" data-bind="click: $parent.deleteField">
