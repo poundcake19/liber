@@ -11,6 +11,7 @@ Liber is a web content management system built in Java. It is designed with a fe
 
 - Create a UTF-8 encoded MySQL database
 - Run the `liber-sql/structure.sql` file to create the database schema
+- Run the `liber-sql/data.sql` file to insert necessary base data
 - Create a JDBC datasource on the app server with JNDI name of `jdbc/liber`
 - Run maven install on `liber-web`
 - Install `liber-web.war` on app server
