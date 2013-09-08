@@ -89,11 +89,6 @@ function HierarchicalValueViewModel( value ) {
 	self.newValueText = ko.observable();
 
 	self.createHierarchicalValue = function() {
-//		var newValue = {
-//			value: self.newValueText(), 
-//			parent: self.activeValue(), 
-//			children: ko.observableArray( [] )
-//		};
 		var newValue = new HierarchicalFieldValue( self.newValueText(), self.activeValue(), [] );
 		var activeValue = self.activeValue();
 		activeValue.children.push( newValue );
