@@ -37,6 +37,7 @@ function FieldViewModel( masterViewModel ) {
 				success: function( field ) {
 					alert( "success!" );
 //						self.successfulCreates.push( article );
+					self.fields.push( field );
 				}, 
 				contentType: "application/json"
 			}
