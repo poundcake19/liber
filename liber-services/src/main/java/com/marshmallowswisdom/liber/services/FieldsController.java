@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.FieldValue;
+import com.marshmallowswisdom.liber.domain.HierarchicalFieldValue;
 import com.marshmallowswisdom.liber.domain.SimpleFieldValue;
 import com.marshmallowswisdom.liber.persistence.Repository;
 
@@ -31,8 +32,13 @@ public class FieldsController {
 	public Field createField( @RequestBody final FieldForm field ) {
 		final Repository repository = new Repository();
 		Set<FieldValue> values = new HashSet<FieldValue>();
-		for( FieldValueForm valueForm : field.getValues() ) {
-			values.add( new SimpleFieldValue( valueForm.getValue() ) );
+		if( field.getType().equals( "hierarchical" ) ) {
+			values.add( new HierarchicalFieldValue( "_root", null ) );
+		}
+		else if( field.getType().equals( "dropdown" ) ) {
+			for( FieldValueForm valueForm : field.getValues() ) {
+				values.add( new SimpleFieldValue( valueForm.getValue() ) );
+			}
 		}
 		Field domainField = new Field( field.getName(), field.getType(), values );
 		return repository.saveField( domainField );

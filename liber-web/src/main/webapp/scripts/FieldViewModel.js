@@ -1,7 +1,7 @@
 function FieldViewModel( masterViewModel ) {
 	var self = this;
 	self.masterViewModel = masterViewModel;
-	self.hierarchicalValueViewModel = new HierarchicalValueViewModel();
+	self.hierarchicalValueViewModel = new HierarchicalValueViewModel( this );
 	
 	self.activeField = ko.observable();
 	self.fields = ko.observableArray( [] );
@@ -35,9 +35,8 @@ function FieldViewModel( masterViewModel ) {
 	self.goToViewView = function( field ) {
 		self.activeField( field );
 		if( field.type == 'hierarchical' ) {
-			alert( "Auto load option from db" );
 			self.hierarchicalValueViewModel.goToValue( 
-					new HierarchicalFieldValue( "_root", null, [] ) );
+					new HierarchicalFieldValue( field.values[0] ) );
 		}
 		self.view( self.viewView );
 	};
@@ -82,18 +81,30 @@ function FieldForm( name, type ) {
 	
 }
 
-function HierarchicalValueViewModel( value ) {
+function HierarchicalValueViewModel( fieldViewModel ) {
 	var self = this;
+	self.fieldViewModel = fieldViewModel;
 	
-	self.activeValue = ko.observable( value );
+	self.activeValue = ko.observable();
 	self.newValueText = ko.observable();
 
 	self.createHierarchicalValue = function() {
-		var newValue = new HierarchicalFieldValue( self.newValueText(), self.activeValue(), [] );
-		var activeValue = self.activeValue();
-		activeValue.children.push( newValue );
-		self.newValueText( "" );
-		alert( "Persistence needs implemented." );
+		$.ajax(
+			{
+				url: "/liber-services/fields/" + fieldViewModel.activeField().id + "/values", 
+				type: "POST", 
+				data: { value: self.newValueText(), parentId: self.activeValue().id }, 
+				success: function( value ) {
+					var newValue = new HierarchicalFieldValue( value );
+					var activeValue = self.activeValue();
+					activeValue.children.push( newValue );
+					self.newValueText( "" );
+					alert( "success!" );
+					//self.successfulCreates.push( article );
+				}, 
+				contentType: "application/json"
+			}
+		);
 	};
 	
 	self.goToValue = function( value ) {
@@ -101,12 +112,12 @@ function HierarchicalValueViewModel( value ) {
 	};
 }
 
-function HierarchicalFieldValue( value, parent, children ) {
+function HierarchicalFieldValue( value ) {
 	var self = this;
 	
-	self.value = ko.observable( value );
-	self.parent = ko.observable( parent );
-	self.children = ko.observableArray( children );
+	self.value = ko.observable( value.value );
+	self.parent = ko.observable( value.parent);
+	self.children = ko.observableArray( value.children );
 	self.valueHierarchy = ko.observableArray( buildValueHierarchy( this ) );
 }
 
