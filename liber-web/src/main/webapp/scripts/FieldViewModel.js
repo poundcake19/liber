@@ -1,39 +1,21 @@
 function FieldViewModel( masterViewModel ) {
 	var self = this;
 	self.masterViewModel = masterViewModel;
+	self.hierarchicalValueViewModel = new HierarchicalValueViewModel();
 	
 	self.activeField = ko.observable();
 	self.fields = ko.observableArray( [] );
 	self.form = new FieldForm( "", "text" );
-	
-	self.valueHierarchy = ko.observableArray( buildValueHierarchy() );
-	self.activeValue = ko.observable();
-	self.newValueText = ko.observable();
-	self.createHierarchicalValue = function() {
-		var newValue = {
-			value: self.newValueText(), 
-			parent: self.activeValue(), 
-			children: ko.observableArray( [] )
-		};
-		var activeValue = self.activeValue();
-		activeValue.children.push( newValue );
-		self.newValueText( "" );
-		alert( "Persistence needs implemented." );
-	};
-	self.goToValue = function( value ) {
-		self.activeValue( value );
-		self.valueHierarchy( buildValueHierarchy( value ) );
-	};
 
 	self.createView = "create";
 	self.listingView = "listing";
 	self.viewView = "view";
 	self.view = ko.observable( self.listingView );
 	self.isCreateView = ko.computed( 
-			function() {
-				return self.view() == self.createView;
-			}
-		);
+		function() {
+			return self.view() == self.createView;
+		}
+	);
 	self.isListingView = ko.computed(
 		function() {
 			return self.view() == self.listingView;
@@ -54,8 +36,8 @@ function FieldViewModel( masterViewModel ) {
 		self.activeField( field );
 		if( field.type == 'hierarchical' ) {
 			alert( "Auto load option from db" );
-			self.activeValue( { value: "_root", parent: null, children: ko.observableArray( [] ) } );
-			self.valueHierarchy( buildValueHierarchy( self.activeValue() ) );
+			self.hierarchicalValueViewModel.goToValue( 
+					new HierarchicalFieldValue( "_root", null, [] ) );
 		}
 		self.view( self.viewView );
 	};
@@ -98,21 +80,39 @@ function FieldForm( name, type ) {
 		self.values.remove( value );
 	};
 	
-	self.addHierarchicalValue = function() {
-		var newValue = {
-			value: self.hierarchicalValue(), 
-			parent: self.activeHierarchicalValue(), 
-			children: ko.observableArray( [] )
-		};
-		var activeValue = self.activeHierarchicalValue();
+}
+
+function HierarchicalValueViewModel( value ) {
+	var self = this;
+	
+	self.activeValue = ko.observable( value );
+	self.newValueText = ko.observable();
+
+	self.createHierarchicalValue = function() {
+//		var newValue = {
+//			value: self.newValueText(), 
+//			parent: self.activeValue(), 
+//			children: ko.observableArray( [] )
+//		};
+		var newValue = new HierarchicalFieldValue( self.newValueText(), self.activeValue(), [] );
+		var activeValue = self.activeValue();
 		activeValue.children.push( newValue );
-		self.hierarchicalValue( "" );
-	};
-	self.goToValue = function( value ) {
-		self.valueHierarchy( buildValueHierarchy( value ) );
-		self.activeHierarchicalValue( value );
+		self.newValueText( "" );
+		alert( "Persistence needs implemented." );
 	};
 	
+	self.goToValue = function( value ) {
+		self.activeValue( value );
+	};
+}
+
+function HierarchicalFieldValue( value, parent, children ) {
+	var self = this;
+	
+	self.value = ko.observable( value );
+	self.parent = ko.observable( parent );
+	self.children = ko.observableArray( children );
+	self.valueHierarchy = ko.observableArray( buildValueHierarchy( this ) );
 }
 
 function buildValueHierarchy( value ) {
@@ -120,7 +120,7 @@ function buildValueHierarchy( value ) {
 	var currentValue = value;
 	while( currentValue != null ) {
 		hierarchy.unshift( currentValue );
-		currentValue = currentValue.parent;
+		currentValue = currentValue.parent();
 	}
 	return hierarchy;
 }
