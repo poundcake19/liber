@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.marshmallowswisdom.liber.domain.Field;
 import com.marshmallowswisdom.liber.domain.FieldValue;
+import com.marshmallowswisdom.liber.domain.SimpleFieldValue;
 import com.marshmallowswisdom.liber.persistence.Repository;
 
 @Controller
@@ -31,7 +32,7 @@ public class FieldsController {
 		final Repository repository = new Repository();
 		Set<FieldValue> values = new HashSet<FieldValue>();
 		for( FieldValueForm valueForm : field.getValues() ) {
-			values.add( new FieldValue( valueForm.getValue() ) );
+			values.add( new SimpleFieldValue( valueForm.getValue() ) );
 		}
 		Field domainField = new Field( field.getName(), field.getType(), values );
 		return repository.saveField( domainField );
