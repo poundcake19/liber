@@ -1,5 +1,7 @@
 package com.marshmallowswisdom.liber.services;
 
+import java.util.List;
+
 public class ContentFieldValueForm {
 	
 	private int id;
@@ -23,6 +25,10 @@ public class ContentFieldValueForm {
 	}
 	
 	public void setType( String type ) {
+		//do nothing
+	}
+	
+	public void setOptions( final List<Object> options ) {
 		//do nothing
 	}
 	
