@@ -85,15 +85,16 @@ function HierarchicalValueViewModel( fieldViewModel ) {
 	var self = this;
 	self.fieldViewModel = fieldViewModel;
 	
-	self.activeValue = ko.observable();
+	self.activeValue = ko.observable( {} );
 	self.newValueText = ko.observable();
 
 	self.createHierarchicalValue = function() {
+		var test = { value: self.newValueText(), parentId: self.activeValue().id };
 		$.ajax(
 			{
 				url: "/liber-services/fields/" + fieldViewModel.activeField().id + "/values", 
 				type: "POST", 
-				data: { value: self.newValueText(), parentId: self.activeValue().id }, 
+				data: JSON.stringify( test ), 
 				success: function( value ) {
 					var newValue = new HierarchicalFieldValue( value );
 					var activeValue = self.activeValue();
@@ -108,15 +109,23 @@ function HierarchicalValueViewModel( fieldViewModel ) {
 	};
 	
 	self.goToValue = function( value ) {
-		self.activeValue( value );
+		$.getJSON(
+			"/liber-services/fields/" + fieldViewModel.activeField().id + "/values/" + value.id, 
+			function( value ) {
+				self.activeValue( new HierarchicalFieldValue( value ) );
+			}
+		);
 	};
 }
 
 function HierarchicalFieldValue( value ) {
 	var self = this;
 	
+	self.id = value.id;
 	self.value = ko.observable( value.value );
-	self.parent = ko.observable( value.parent);
+	self.parent = ko.observable( ( value.parent != null ) ? 
+									new HierarchicalFieldValue( value.parent ) : 
+									null );
 	self.children = ko.observableArray( value.children );
 	self.valueHierarchy = ko.observableArray( buildValueHierarchy( this ) );
 }

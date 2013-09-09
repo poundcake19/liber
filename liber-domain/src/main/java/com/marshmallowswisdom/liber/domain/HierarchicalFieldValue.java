@@ -35,8 +35,16 @@ public class HierarchicalFieldValue extends FieldValue {
 		updatePath();
 	}
 	
+	public HierarchicalFieldValue getParent() {
+		return parent;
+	}
+	
 	public String getPath() {
 		return path;
+	}
+	
+	public Set<HierarchicalFieldValue> getChildren() {
+		return childValues;
 	}
 	
 	private void updatePath() {

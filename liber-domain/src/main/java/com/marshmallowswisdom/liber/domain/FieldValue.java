@@ -32,6 +32,10 @@ public abstract class FieldValue {
 		this.value = value;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	public String getValue() {
 		return value;
 	}
