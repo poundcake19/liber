@@ -35,6 +35,7 @@ function FieldViewModel( masterViewModel ) {
 	self.goToViewView = function( field ) {
 		self.activeField( field );
 		if( field.type == 'hierarchical' ) {
+			field.values.sort( function( left, right ) { return left.id - right.id; } );
 			self.hierarchicalValueViewModel.goToValue( 
 					new HierarchicalFieldValue( field.values[0] ) );
 		}
@@ -42,8 +43,6 @@ function FieldViewModel( masterViewModel ) {
 	};
 	
 	self.createField = function() {
-//		var field = { name: self.form.name(), type: self.form.type() };
-		
 		$.ajax(
 			{
 				url: "/liber-services/fields", 
@@ -51,7 +50,7 @@ function FieldViewModel( masterViewModel ) {
 				data: JSON.stringify( ko.toJS( self.form ) ), 
 				success: function( field ) {
 					alert( "success!" );
-//						self.successfulCreates.push( article );
+//					self.successfulCreates.push( article );
 					self.fields.push( field );
 				}, 
 				contentType: "application/json"
