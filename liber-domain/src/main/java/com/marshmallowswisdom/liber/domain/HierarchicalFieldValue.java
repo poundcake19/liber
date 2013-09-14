@@ -24,9 +24,14 @@ public class HierarchicalFieldValue extends FieldValue {
 	@OneToMany(mappedBy="parent", cascade=CascadeType.ALL)
 	private Set<HierarchicalFieldValue> childValues;
 	
-	/* for JPA */
-	private HierarchicalFieldValue() {
-		super( null );
+	/**
+	 * Create root value for a hierarchical field
+	 * @param value
+	 */
+	public HierarchicalFieldValue() {
+		super( "_root" );
+		parent = null;
+		path = "";
 	}
 	
 	public HierarchicalFieldValue( final String value, final HierarchicalFieldValue parent ) {

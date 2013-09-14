@@ -41,7 +41,7 @@ public class FieldsController {
 		final Repository repository = new Repository();
 		Set<FieldValue> values = new HashSet<FieldValue>();
 		if( field.getType().equals( "hierarchical" ) ) {
-			values.add( new HierarchicalFieldValue( "_root", null ) );
+			values.add( new HierarchicalFieldValue() );
 		}
 		else if( field.getType().equals( "dropdown" ) ) {
 			for( FieldValueForm valueForm : field.getValues() ) {
