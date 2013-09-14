@@ -49,5 +49,9 @@ public class RestfulHierarchicalFieldValue extends RestfulFieldValue {
 		}
 		return children;
 	}
+	
+	public String getPath() {
+		return value.getPath();
+	}
 
 }
