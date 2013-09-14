@@ -1,6 +1,7 @@
 package com.marshmallowswisdom.liber.services;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,15 +55,18 @@ public class FieldsController {
 	
 	@RequestMapping( value = "/{fieldId}/values", method = RequestMethod.POST )
 	@ResponseBody
-	public FieldValue createFieldValue( @RequestBody final HierarchicalFieldValueForm value, 
-										@PathVariable final int fieldId ) {
+	public RestfulFieldValue createFieldValue( @RequestBody final HierarchicalFieldValueForm value, 
+												@PathVariable final int fieldId ) {
 		final Repository repository = new Repository();
 		final HierarchicalFieldValue parent = 
 				(HierarchicalFieldValue)repository.retrieveFieldValue( value.getParentId() );
 		final HierarchicalFieldValue domainValue = 
 				new HierarchicalFieldValue( value.getValue(), parent );
 		domainValue.setField( repository.retrieveField( fieldId ) );
-		return repository.saveFieldValue( domainValue );
+		return new RestfulHierarchicalFieldValue( 
+				(HierarchicalFieldValue)repository.saveFieldValue( domainValue ), 
+				null, 
+				Collections.<HierarchicalFieldValue> emptyList() );
 	}
 	
 	@RequestMapping( value = "/{fieldId}/values/{id}", method = RequestMethod.GET )
