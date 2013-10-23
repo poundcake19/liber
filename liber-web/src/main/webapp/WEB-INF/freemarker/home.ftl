@@ -33,7 +33,7 @@
 					<ul class="nav">
 						<li><a href="<@spring.url "/"/>"><i class="icon-home"></i>Home</a></li>
 						<li>
-							<a href="<@spring.url "/createArticle"/>">
+							<a href="#" data-bind="click: articleViewModel.goToCreateArticle">
 								<i class="icon-file"></i>Create Article
 							</a>
 						</li>
