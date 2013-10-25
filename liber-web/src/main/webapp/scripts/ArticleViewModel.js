@@ -14,6 +14,7 @@ function ArticleViewModel( masterViewModel ) {
 	self.tagListingView = "tagListing";
 	self.viewArticleView = "view";
 	self.createView = "create";
+	self.editView = "edit";
 	self.activeArticle = ko.observable( { name: "", content: "", fields: [] } );
 	self.articleView = ko.observable( self.homeView );
 	self.isHomeView = ko.computed( function() {
@@ -30,6 +31,10 @@ function ArticleViewModel( masterViewModel ) {
 	);
 	self.isCreateView = ko.computed( function() {
 			return self.articleView() == self.createView;
+		}
+	);
+	self.isEditView = ko.computed( function() {
+		return self.articleView() == self.editView;
 		}
 	);
 	self.goToHomeArticles = function() {
@@ -58,6 +63,9 @@ function ArticleViewModel( masterViewModel ) {
 					} );
 		self.articleView( self.createView );
 	};
+	self.goToEditArticle = function() {
+		self.articleView( self.editView );
+	};
 	
 	self.createArticle = function() {
 		var article = { 
@@ -79,6 +87,10 @@ function ArticleViewModel( masterViewModel ) {
 				contentType: "application/json"
 			}
 		);
+	};
+	
+	self.editArticle = function( article ) {
+		alert("Edit article");
 	};
 	
 	self.deleteArticle = function( article ) {

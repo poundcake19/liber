@@ -71,6 +71,8 @@
 						</div>
 						<div class="span8" data-bind="visible: isCreateView, template: 'createArticle'">
 						</div>
+						<div class="span8" data-bind="visible: isEditView, template: 'editArticle'">
+						</div>
 					<!-- /ko -->
 				</div>
 			</div>
