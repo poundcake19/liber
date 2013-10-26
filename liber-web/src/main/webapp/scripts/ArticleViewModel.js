@@ -8,6 +8,7 @@ function ArticleViewModel( masterViewModel ) {
 	self.fields = ko.observableArray( [] );
 	
 	self.successfulCreates = ko.observableArray( [] );
+	self.successfulUpdates = ko.observableArray( [] );
 	self.successfulDeletes = ko.observableArray( [] );
 	
 	self.homeView = "home";
@@ -17,37 +18,46 @@ function ArticleViewModel( masterViewModel ) {
 	self.editView = "edit";
 	self.activeArticle = ko.observable( { name: "", content: "", fields: [] } );
 	self.articleView = ko.observable( self.homeView );
+	
 	self.isHomeView = ko.computed( function() {
 			return self.articleView() == self.homeView;
 		}
 	);
+	
 	self.isTagListingView = ko.computed( function() {
 			return self.articleView() == self.tagListingView;
 		}
 	);
+	
 	self.isViewArticleView = ko.computed( function() {
 			return self.articleView() == self.viewArticleView;
 		}
 	);
+	
 	self.isCreateView = ko.computed( function() {
 			return self.articleView() == self.createView;
 		}
 	);
+	
 	self.isEditView = ko.computed( function() {
 		return self.articleView() == self.editView;
 		}
 	);
+	
 	self.goToHomeArticles = function() {
 		self.articleView( self.homeView );
 	};
+	
 	self.goToTagListing = function () {
 		self.successfulCreates.removeAll();
+		self.successfulUpdates.removeAll();
 		self.successfulDeletes.removeAll();
 		self.articleView( self.tagListingView );
 		self.articleForm.name( "" );
 		self.articleForm.content( "" );
 		self.articleForm.tags( [] );
 	};
+	
 	self.goToViewArticle = function( article ) {
 		$.getJSON( "/liber-services/articles/" + article.id, 
 					function( article ) {
@@ -55,6 +65,7 @@ function ArticleViewModel( masterViewModel ) {
 					} );
 		self.articleView( self.viewArticleView );
 	};
+	
 	self.goToCreateArticle = function() {
 		$.getJSON( "/liber-services/tags", 
 					function( tags ) { 
@@ -63,7 +74,11 @@ function ArticleViewModel( masterViewModel ) {
 					} );
 		self.articleView( self.createView );
 	};
+	
 	self.goToEditArticle = function() {
+		self.articleForm.name( self.activeArticle().name );
+		self.articleForm.content( self.activeArticle().content );
+		self.articleForm.tags ( self.activeArticle().tags );
 		self.articleView( self.editView );
 	};
 	
@@ -89,8 +104,26 @@ function ArticleViewModel( masterViewModel ) {
 		);
 	};
 	
-	self.editArticle = function( article ) {
-		alert("Edit article");
+	self.editArticle = function() {
+		var article = {
+			name: self.articleForm.name(),
+			content: self.articleForm.content(),
+			/*tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } ),*/
+			fields: ko.toJS( self.articleForm.fields )
+		};
+		$.ajax(
+			{
+				url: "/liber-services/articles/" + self.activeArticle().id, 
+				type: "POST", 
+				data: JSON.stringify( article ), 
+				success: function( article ) {
+					self.activeArticle( article );
+					self.goToViewArticle( article );
+					self.successfulUpdates.push( article );
+				}, 
+				contentType: "application/json"
+			}
+		);
 	};
 	
 	self.deleteArticle = function( article ) {

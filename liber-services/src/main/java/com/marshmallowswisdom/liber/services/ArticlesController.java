@@ -56,6 +56,13 @@ public class ArticlesController {
 		return new RestfulArticle( domainArticle );
 	}
 	
+	@RequestMapping( value = "/{id}", method = RequestMethod.POST )
+	@ResponseBody
+	public RestfulArticle updateArticle( @RequestBody final ArticleForm article ) {
+		System.out.println("UPDATE ARTICLE");
+		return null;
+	}
+	
 	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
 	@ResponseBody
 	public String deleteArticle( @PathVariable final int id ) {
