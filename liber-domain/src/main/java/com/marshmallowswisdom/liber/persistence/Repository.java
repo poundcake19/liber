@@ -39,12 +39,11 @@ public class Repository {
 		return article;
 	}
 	
-	public Article editArticle( Article article, ArticleVersion editedVersion ) {
+	public Article editArticle( Article article ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		article = editedVersion.getArticle();
-		article.setLatestVersion(editedVersion);
+		article = entityManager.merge(article);
 		transaction.commit();
 		entityManager.close();
 		return article;

@@ -106,7 +106,7 @@ function ArticleViewModel( masterViewModel ) {
 		var article = {
 			name: self.articleForm.name(),
 			content: self.articleForm.content(),
-			/*tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } ),*/
+			tags: $.map( self.articleForm.tags(), function( tag ) { return tag.path; } ),
 			fields: ko.toJS( self.articleForm.fields )
 		};
 		$.ajax(

@@ -71,13 +71,13 @@ public class ArticlesController {
 				tags.add( repository.retrieveTagByPath( path ) );
 			}
 		}
-		Article domainArticle = new Article( article.getName() );
-		domainArticle.setId(id);
-		ArticleVersion editedVersion = new ArticleVersion( domainArticle, 
+		Article domainArticle = repository.retrieveArticle(id);
+		domainArticle.setName( article.getName() );
+		domainArticle.setLatestVersion(new ArticleVersion( domainArticle, 
 				article.getContent(), 
 				fieldValues, 
-				tags );
-		domainArticle = repository.editArticle( domainArticle, editedVersion );	
+				tags ));
+		domainArticle = repository.editArticle( domainArticle );	
 		return new RestfulArticle( domainArticle );
 	}
 	
