@@ -24,7 +24,8 @@ create table article(
 create table article_version(
 	id int not null auto_increment primary key, 
 	article_id int not null, 
-	content longtext not null, 
+	content longtext not null,
+	created_date datetime not null,
 	foreign key(article_id) references article(id)
 );
 
