@@ -58,9 +58,27 @@ public class ArticlesController {
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.POST )
 	@ResponseBody
-	public RestfulArticle updateArticle( @RequestBody final ArticleForm article ) {
-		System.out.println("UPDATE ARTICLE");
-		return null;
+	public RestfulArticle editArticle( @RequestBody final ArticleForm article ) {
+		final Repository repository = new Repository();
+		final Set<ContentFieldValue> fieldValues = new HashSet<ContentFieldValue>();
+		for( ContentFieldValueForm field : article.getFields() ) {
+			fieldValues.add( new ContentFieldValue( repository.retrieveField( field.getId() ), 
+																		field.getValue() ) );
+		}
+		final Set<Tag> tags = new HashSet<Tag>();
+		for( String path : article.getTags() ) {
+			if( path != null && !path.isEmpty() ) {
+				tags.add( repository.retrieveTagByPath( path ) );
+			}
+		}
+		Article domainArticle = new Article( article.getName() );
+		ArticleVersion version = new ArticleVersion( domainArticle, 
+				article.getContent(), 
+				fieldValues, 
+				tags );
+		//TODO Update article in database
+		domainArticle.setLatestVersion(version);
+		return new RestfulArticle( domainArticle );
 	}
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.DELETE )
