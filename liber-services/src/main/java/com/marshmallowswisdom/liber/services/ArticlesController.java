@@ -58,7 +58,7 @@ public class ArticlesController {
 	
 	@RequestMapping( value = "/{id}", method = RequestMethod.POST )
 	@ResponseBody
-	public RestfulArticle editArticle( @RequestBody final ArticleForm article ) {
+	public RestfulArticle editArticle( @PathVariable final int id, @RequestBody final ArticleForm article ) {
 		final Repository repository = new Repository();
 		final Set<ContentFieldValue> fieldValues = new HashSet<ContentFieldValue>();
 		for( ContentFieldValueForm field : article.getFields() ) {
@@ -72,12 +72,12 @@ public class ArticlesController {
 			}
 		}
 		Article domainArticle = new Article( article.getName() );
-		ArticleVersion version = new ArticleVersion( domainArticle, 
+		domainArticle.setId(id);
+		ArticleVersion editedVersion = new ArticleVersion( domainArticle, 
 				article.getContent(), 
 				fieldValues, 
 				tags );
-		//TODO Update article in database
-		domainArticle.setLatestVersion(version);
+		domainArticle = repository.editArticle( domainArticle, editedVersion );	
 		return new RestfulArticle( domainArticle );
 	}
 	

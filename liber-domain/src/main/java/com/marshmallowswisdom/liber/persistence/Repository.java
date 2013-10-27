@@ -27,16 +27,6 @@ public class Repository {
 		factory = Persistence.createEntityManagerFactory( "liber" );
 	}
 	
-	public ArticleVersion saveArticleVersion( ArticleVersion articleVersion ) {
-		final EntityManager entityManager = factory.createEntityManager();
-		final EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
-		articleVersion = entityManager.merge( articleVersion );
-		transaction.commit();
-		entityManager.close();
-		return articleVersion;
-	}
-	
 	public Article saveNewArticle( Article article, ArticleVersion firstVersion ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final EntityTransaction transaction = entityManager.getTransaction();
@@ -49,11 +39,12 @@ public class Repository {
 		return article;
 	}
 	
-	public Article saveArticle( Article article ) {
+	public Article editArticle( Article article, ArticleVersion editedVersion ) {
 		final EntityManager entityManager = factory.createEntityManager();
 		final EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
-		article = entityManager.merge( article );
+		article = editedVersion.getArticle();
+		article.setLatestVersion(editedVersion);
 		transaction.commit();
 		entityManager.close();
 		return article;
